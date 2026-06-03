@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+import '../../../../app/router/app_router.dart';
 
 import '../../bloc/coins_bloc.dart';
 import '../../bloc/coins_event.dart';
@@ -73,6 +74,13 @@ class CoinsPage extends StatelessWidget {
                           final coin = filteredCoins[index];
 
                           return ListTile(
+                            onTap: () {
+                              context.router.push(
+                                CoinDetailRoute(
+                                  coinId: coin.id,
+                                ),
+                              );
+                            },
                             leading: Image.network(
                               coin.image,
                               width: 40,

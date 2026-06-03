@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../feature/coins/presentation/pages/coins_page.dart';
+import '../../feature/coin_detail/presentation/pages/coin_detail_page.dart';
 import '../../feature/favorites/presentation/favorites_page.dart';
 import '../../feature/settings/presentation/settings_page.dart';
 
@@ -19,6 +21,9 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: SettingsRoute.page,
+        ),
+        AutoRoute(
+          page: CoinDetailRoute.page,
         ),
       ];
 }
