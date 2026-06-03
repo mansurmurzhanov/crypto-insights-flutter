@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
@@ -36,26 +37,60 @@ class CoinsPage extends StatelessWidget {
               );
 
             case CoinsStatus.success:
-              return ListView.builder(
-                itemCount: state.coins.length,
-                itemBuilder: (context, index) {
-                  final coin = state.coins[index];
+              final query = state.query.toLowerCase().trim();
 
-                  return ListTile(
-                    leading: Image.network(
-                      coin.image,
-                      width: 40,
-                      height: 40,
+              final filteredCoins = state.coins.where((coin) {
+                return coin.name.toLowerCase().contains(query) ||
+                    coin.symbol.toLowerCase().contains(query);
+              }).toList();
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Search coin...',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        context.read<CoinsBloc>().add(
+                          SearchCoins(value),
+                        );
+                      },
                     ),
-                    title: Text(coin.name),
-                    subtitle: Text(
-                      coin.symbol.toUpperCase(),
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<CoinsBloc>().add(
+                          RefreshCoins(),
+                        );
+                      },
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: filteredCoins.length,
+                        itemBuilder: (context, index) {
+                          final coin = filteredCoins[index];
+
+                          return ListTile(
+                            leading: Image.network(
+                              coin.image,
+                              width: 40,
+                              height: 40,
+                            ),
+                            title: Text(coin.name),
+                            subtitle: Text(
+                              coin.symbol.toUpperCase(),
+                            ),
+                            trailing: Text(
+                              '\$${coin.currentPrice}',
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    trailing: Text(
-                      '\$${coin.currentPrice}',
-                    ),
-                  );
-                },
+                  ),
+                ],
               );
           }
         },

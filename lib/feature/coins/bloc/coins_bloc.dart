@@ -13,6 +13,8 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
   CoinsBloc(this.getCoinsUseCase)
       : super(const CoinsState()) {
     on<LoadCoins>(_onLoadCoins);
+    on<RefreshCoins>(_onRefreshCoins);
+    on<SearchCoins>(_onSearchCoins);
   }
 
   Future<void> _onLoadCoins(
@@ -24,6 +26,8 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
       status: CoinsStatus.loading,
     ),
   );
+
+  
 
   try {
     final coins = await getCoinsUseCase();
@@ -43,4 +47,25 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
     );
   }
 }
+
+  Future<void> _onRefreshCoins(
+    RefreshCoins event,
+    Emitter<CoinsState> emit,
+  ) async {
+    await _onLoadCoins(
+      LoadCoins(),
+      emit,
+    );
+  }
+
+  void _onSearchCoins(
+    SearchCoins event,
+    Emitter<CoinsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        query: event.query,
+      ),
+    );
+  }
 }
