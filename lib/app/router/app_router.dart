@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../../feature/coins/presentation/coins_page.dart';
+import '../../feature/coins/presentation/pages/coins_page.dart';
 import '../../feature/favorites/presentation/favorites_page.dart';
 import '../../feature/settings/presentation/settings_page.dart';
 

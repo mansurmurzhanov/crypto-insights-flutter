@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app/bloc/theme_mode/theme_mode_cubit.dart';
 import 'core/theme/app_theme.dart';
 
+import 'feature/coins/bloc/coins_bloc.dart';
+
 import 'l10n/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +18,18 @@ Future<void> main() async {
   await configureDependencies();
 
   runApp(
-  BlocProvider(
-    create: (_) => ThemeModeCubit(),
-    child: const CryptoInsightsApp(),
-  ),
+MultiBlocProvider(
+  providers: [
+    BlocProvider(
+      create: (_) => ThemeModeCubit(),
+    ),
+
+    BlocProvider(
+      create: (_) => getIt<CoinsBloc>(),
+    ),
+  ],
+  child: const CryptoInsightsApp(),
+)
 );
 }
 
