@@ -49,6 +49,7 @@ dependencies:
   
   dio: ^5.9.0
   cached_network_image: ^3.4.1
+  syncfusion_flutter_charts: ^31.1.17
 
 
   flutter_localizations:

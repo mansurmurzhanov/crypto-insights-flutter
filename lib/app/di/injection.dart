@@ -8,6 +8,18 @@ import '../../feature/coins/data/repositories/coins_repository_impl.dart';
 import '../../feature/coins/domain/repositories/coins_repository.dart';
 import '../../feature/coins/domain/usecases/get_coins_use_case.dart';
 
+import '../../feature/coin_detail/data/datasources/coin_detail_remote_data_source.dart';
+import '../../feature/coin_detail/data/repositories/coin_detail_repository_impl.dart';
+import '../../feature/coin_detail/domain/repositories/coin_detail_repository.dart';
+import '../../feature/coin_detail/domain/usecases/get_coin_detail_use_case.dart';
+import '../../feature/coin_detail/presentation/bloc/coin_detail_bloc.dart';
+
+import '../../feature/coin_detail/data/datasources/coin_chart_remote_data_source.dart';
+import '../../feature/coin_detail/data/repositories/coin_chart_repository_impl.dart';
+import '../../feature/coin_detail/domain/repositories/coin_chart_repository.dart';
+import '../../feature/coin_detail/domain/usecases/get_coin_chart_use_case.dart';
+import '../../feature/coin_detail/presentation/chart/coin_chart_bloc.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
@@ -36,6 +48,54 @@ Future<void> configureDependencies() async {
   getIt.registerFactory(
     () => CoinsBloc(
       getIt<GetCoinsUseCase>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<CoinDetailRemoteDataSource>(
+    () => CoinDetailRemoteDataSourceImpl(
+      getIt<DioClient>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<CoinDetailRepository>(
+    () => CoinDetailRepositoryImpl(
+      getIt<CoinDetailRemoteDataSource>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => GetCoinDetailUseCase(
+      getIt<CoinDetailRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => CoinDetailBloc(
+      getIt<GetCoinDetailUseCase>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<CoinChartRemoteDataSource>(
+    () => CoinChartRemoteDataSourceImpl(
+      getIt<DioClient>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<CoinChartRepository>(
+    () => CoinChartRepositoryImpl(
+      getIt<CoinChartRemoteDataSource>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => GetCoinChartUseCase(
+      getIt<CoinChartRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => CoinChartBloc(
+      getIt<GetCoinChartUseCase>(),
     ),
   );
 }
