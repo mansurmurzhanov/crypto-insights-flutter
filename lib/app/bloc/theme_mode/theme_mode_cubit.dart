@@ -1,18 +1,45 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeModeCubit extends Cubit<ThemeMode> {
-  ThemeModeCubit() : super(ThemeMode.system);
+  static const _themeKey = 'theme_mode';
 
-  void setLight() {
+  ThemeModeCubit() : super(ThemeMode.system) {
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedTheme = prefs.getString(_themeKey);
+
+    switch (savedTheme) {
+      case 'light':
+        emit(ThemeMode.light);
+        break;
+      case 'dark':
+        emit(ThemeMode.dark);
+        break;
+      default:
+        emit(ThemeMode.system);
+    }
+  }
+
+  Future<void> setLight() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeKey, 'light');
     emit(ThemeMode.light);
   }
 
-  void setDark() {
+  Future<void> setDark() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeKey, 'dark');
     emit(ThemeMode.dark);
   }
 
-  void setSystem() {
+  Future<void> setSystem() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeKey, 'system');
     emit(ThemeMode.system);
   }
 }

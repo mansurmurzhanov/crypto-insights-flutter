@@ -1,7 +1,32 @@
 {
   "@@locale": "en",
+
   "hello": "Hello",
-  "@hello": {
-    "description": "Test localization string"
-  }
+  "settings": "Settings",
+
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+
+  "english": "English",
+  "russian": "Russian",
+
+  "favorites": "Favorites",
+  "noFavorites": "No favorites yet",
+
+  "searchCoin": "Search coin...",
+  "noFavoritesYet": "No favorites yet",
+  "addCoinsFromDetails": "Add coins from details screen",
+  "removedFromFavorites": "removed from favorites",
+  "cryptoInsights": "Crypto Insights",
+  "coinDetails": "Coin Details",
+"addToFavorites": "Add to Favorites",
+"price": "Price",
+"marketCap": "Market Cap",
+"volume": "Volume",
+"rank": "Rank",
+"ath": "ATH",
+"addedToFavorites": "added to favorites",
+"atl": "ATL",
+"failedToLoadChart": "Failed to load chart"
 }

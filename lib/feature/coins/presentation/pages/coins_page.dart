@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../app/router/app_router.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../../bloc/coins_bloc.dart';
 import '../../bloc/coins_event.dart';
@@ -16,13 +17,23 @@ class CoinsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crypto Insights'),
+        title: Text(
+          AppLocalizations.of(context)!.cryptoInsights,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {
               context.router.push(
                 const FavoritesRoute(),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              context.router.push(
+                const SettingsRoute(),
               );
             },
           ),
@@ -59,9 +70,9 @@ class CoinsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Search coin...',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.searchCoin,
+                        border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
                         context.read<CoinsBloc>().add(
@@ -91,10 +102,21 @@ class CoinsPage extends StatelessWidget {
                                 ),
                               );
                             },
-                            leading: Image.network(
-                              coin.image,
+                            leading: CachedNetworkImage(
+                              imageUrl: coin.image,
                               width: 40,
                               height: 40,
+                              placeholder: (context, url) => const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const CircleAvatar(
+                                    child: Icon(Icons.currency_bitcoin),
+                                  ),
                             ),
                             title: Text(coin.name),
                             subtitle: Text(

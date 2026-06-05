@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/injection.dart';
+import '../../../l10n/app_localizations.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -16,7 +17,9 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: Text(
+          AppLocalizations.of(context)!.favorites,
+        ),
       ),
       body: BlocProvider(
         create: (_) => getIt<FavoritesBloc>()
@@ -40,7 +43,7 @@ class FavoritesPage extends StatelessWidget {
             }
 
             if (state.favorites.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -49,9 +52,13 @@ class FavoritesPage extends StatelessWidget {
                       size: 64,
                     ),
                     SizedBox(height: 16),
-                    Text('No favorites yet'),
+                    Text(
+                      AppLocalizations.of(context)!.noFavoritesYet,
+                    ),
                     SizedBox(height: 8),
-                    Text('Add coins from details screen'),
+                    Text(
+                      AppLocalizations.of(context)!.addCoinsFromDetails,
+                    ),
                   ],
                 ),
               );
@@ -74,7 +81,7 @@ class FavoritesPage extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            '$coinId removed from favorites',
+                            '$coinId ${AppLocalizations.of(context)!.removedFromFavorites}',
                           ),
                         ),
                       );

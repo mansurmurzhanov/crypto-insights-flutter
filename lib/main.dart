@@ -7,6 +7,7 @@ import 'app/di/injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app/bloc/theme_mode/theme_mode_cubit.dart';
+import 'app/bloc/locale/locale_cubit.dart';
 import 'core/theme/app_theme.dart';
 
 import 'feature/coins/bloc/coins_bloc.dart';
@@ -22,6 +23,9 @@ MultiBlocProvider(
   providers: [
     BlocProvider(
       create: (_) => ThemeModeCubit(),
+    ),
+    BlocProvider(
+      create: (_) => LocaleCubit(),
     ),
 
     BlocProvider(
@@ -45,9 +49,8 @@ Widget build(BuildContext context) {
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeMode,
-
+        locale: context.watch<LocaleCubit>().state,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
-
         supportedLocales: AppLocalizations.supportedLocales,
       );
     },

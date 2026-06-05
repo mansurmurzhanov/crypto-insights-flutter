@@ -1,7 +1,32 @@
 {
   "@@locale": "ru",
+
   "hello": "Привет",
-  "@hello": {
-    "description": "Тестовая строка локализации"
-  }
+  "settings": "Настройки",
+
+  "light": "Светлая",
+  "dark": "Тёмная",
+  "system": "Системная",
+
+  "english": "Английский",
+  "russian": "Русский",
+
+  "favorites": "Избранное",
+  "noFavorites": "Нет избранных монет",
+
+  "searchCoin": "Поиск монеты...",
+  "noFavoritesYet": "Пока нет избранных",
+  "addCoinsFromDetails": "Добавьте монеты со страницы деталей",
+  "removedFromFavorites": "удалён из избранного",
+  "cryptoInsights": "Крипто Инсайты",
+  "coinDetails": "Детали монеты",
+"addToFavorites": "Добавить в избранное",
+"price": "Цена",
+"marketCap": "Рыночная капитализация",
+"volume": "Объём",
+"rank": "Рейтинг",
+"ath": "Исторический максимум",
+"atl": "Исторический минимум",
+"addedToFavorites": "добавлен в избранное",
+"failedToLoadChart": "Не удалось загрузить график"
 }

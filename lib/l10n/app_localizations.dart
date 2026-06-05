@@ -98,11 +98,149 @@ abstract class AppLocalizations {
     Locale('ru'),
   ];
 
-  /// Test localization string
+  /// No description provided for @hello.
   ///
   /// In en, this message translates to:
   /// **'Hello'**
   String get hello;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @russian.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get russian;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @noFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get noFavorites;
+
+  /// No description provided for @searchCoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Search coin...'**
+  String get searchCoin;
+
+  /// No description provided for @noFavoritesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get noFavoritesYet;
+
+  /// No description provided for @addCoinsFromDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Add coins from details screen'**
+  String get addCoinsFromDetails;
+
+  /// No description provided for @removedFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'removed from favorites'**
+  String get removedFromFavorites;
+
+  /// No description provided for @cryptoInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Crypto Insights'**
+  String get cryptoInsights;
+
+  /// No description provided for @coinDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Coin Details'**
+  String get coinDetails;
+
+  /// No description provided for @addToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Favorites'**
+  String get addToFavorites;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @marketCap.
+  ///
+  /// In en, this message translates to:
+  /// **'Market Cap'**
+  String get marketCap;
+
+  /// No description provided for @volume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get volume;
+
+  /// No description provided for @rank.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank'**
+  String get rank;
+
+  /// No description provided for @ath.
+  ///
+  /// In en, this message translates to:
+  /// **'ATH'**
+  String get ath;
+
+  /// No description provided for @addedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'added to favorites'**
+  String get addedToFavorites;
+
+  /// No description provided for @atl.
+  ///
+  /// In en, this message translates to:
+  /// **'ATL'**
+  String get atl;
+
+  /// No description provided for @failedToLoadChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load chart'**
+  String get failedToLoadChart;
 }
 
 class _AppLocalizationsDelegate

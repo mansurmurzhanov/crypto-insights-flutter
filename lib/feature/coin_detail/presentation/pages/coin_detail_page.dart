@@ -14,6 +14,7 @@ import '../chart/coin_chart_event.dart';
 import '../chart/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
+import '../../../../l10n/app_localizations.dart';
 
 @RoutePage()
 class CoinDetailPage extends StatelessWidget {
@@ -28,7 +29,9 @@ class CoinDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Coin Details'),
+        title: Text(
+          AppLocalizations.of(context)!.coinDetails,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.favorite_border),
@@ -100,13 +103,15 @@ class CoinDetailPage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              '${coin.name} added to favorites',
+                              '${coin.name} ${AppLocalizations.of(context)!.addedToFavorites}',
                             ),
                           ),
                         );
                       },
                       icon: const Icon(Icons.favorite_border),
-                      label: const Text('Add to Favorites'),
+                      label: Text(
+                        AppLocalizations.of(context)!.addToFavorites,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     BlocBuilder<CoinChartBloc, CoinChartState>(
@@ -168,8 +173,10 @@ class CoinDetailPage extends StatelessWidget {
                           }
 
                           if (chartState.status == CoinChartStatus.failure) {
-                            return const Center(
-                              child: Text('Failed to load chart'),
+                            return Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.failedToLoadChart,
+                              ),
                             );
                           }
 
@@ -187,12 +194,12 @@ class CoinDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Text('Price: ${coin.currentPrice}'),
-                    Text('Market Cap: ${coin.marketCap}'),
-                    Text('Volume: ${coin.volume}'),
-                    Text('Rank: ${coin.marketCapRank}'),
-                    Text('ATH: ${coin.ath}'),
-                    Text('ATL: ${coin.atl}'),
+                    Text('${AppLocalizations.of(context)!.price}: ${coin.currentPrice}'),
+                    Text('${AppLocalizations.of(context)!.marketCap}: ${coin.marketCap}'),
+                    Text('${AppLocalizations.of(context)!.volume}: ${coin.volume}'),
+                    Text('${AppLocalizations.of(context)!.rank}: ${coin.marketCapRank}'),
+                    Text('${AppLocalizations.of(context)!.ath}: ${coin.ath}'),
+                    Text('${AppLocalizations.of(context)!.atl}: ${coin.atl}'),
                   ],
                 ),
               );
