@@ -17,6 +17,16 @@ class CoinsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crypto Insights'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              context.router.push(
+                const FavoritesRoute(),
+              );
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<CoinsBloc, CoinsState>(
         builder: (context, state) {

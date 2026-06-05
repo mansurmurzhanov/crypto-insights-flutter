@@ -19,6 +19,12 @@ import '../../feature/coin_detail/data/repositories/coin_chart_repository_impl.d
 import '../../feature/coin_detail/domain/repositories/coin_chart_repository.dart';
 import '../../feature/coin_detail/domain/usecases/get_coin_chart_use_case.dart';
 import '../../feature/coin_detail/presentation/chart/coin_chart_bloc.dart';
+import '../../feature/favorites/domain/favorites_repository.dart';
+import '../../feature/favorites/data/favorites_repository_impl.dart';
+import '../../feature/favorites/domain/usecases/get_favorites_use_case.dart';
+import '../../feature/favorites/domain/usecases/add_favorite_use_case.dart';
+import '../../feature/favorites/domain/usecases/remove_favorite_use_case.dart';
+import '../../feature/favorites/bloc/favorites_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -98,4 +104,35 @@ Future<void> configureDependencies() async {
       getIt<GetCoinChartUseCase>(),
     ),
   );
+
+  getIt.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(),
+  );
+
+  getIt.registerFactory(
+    () => GetFavoritesUseCase(
+      getIt<FavoritesRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => AddFavoriteUseCase(
+      getIt<FavoritesRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => RemoveFavoriteUseCase(
+      getIt<FavoritesRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => FavoritesBloc(
+      getIt<GetFavoritesUseCase>(),
+      getIt<AddFavoriteUseCase>(),
+      getIt<RemoveFavoriteUseCase>(),
+    ),
+  );
+  
 }

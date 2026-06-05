@@ -12,6 +12,8 @@ import '../bloc/coin_detail_state.dart';
 import '../chart/coin_chart_bloc.dart';
 import '../chart/coin_chart_event.dart';
 import '../chart/coin_chart_state.dart';
+import '../../../favorites/bloc/favorites_bloc.dart';
+import '../../../favorites/bloc/favorites_event.dart';
 
 @RoutePage()
 class CoinDetailPage extends StatelessWidget {
@@ -27,6 +29,12 @@ class CoinDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Coin Details'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite_border),
+            onPressed: null,
+          ),
+        ],
       ),
       body: MultiBlocProvider(
         providers: [
@@ -44,6 +52,9 @@ class CoinDetailPage extends StatelessWidget {
                   days: 1,
                 ),
               ),
+          ),
+          BlocProvider(
+            create: (_) => getIt<FavoritesBloc>(),
           ),
         ],
         child: BlocBuilder<CoinDetailBloc, CoinDetailState>(
@@ -65,6 +76,7 @@ class CoinDetailPage extends StatelessWidget {
             if (state.status == CoinDetailStatus.success &&
                 state.coin != null) {
               final coin = state.coin!;
+              final favoritesBloc = context.read<FavoritesBloc>();
 
               return Padding(
                 padding: const EdgeInsets.all(16),
@@ -78,6 +90,24 @@ class CoinDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(coin.symbol.toUpperCase()),
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        favoritesBloc.add(
+                          AddFavorite(coin.id),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              '${coin.name} added to favorites',
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.favorite_border),
+                      label: const Text('Add to Favorites'),
+                    ),
                     const SizedBox(height: 16),
                     BlocBuilder<CoinChartBloc, CoinChartState>(
                       builder: (context, chartState) {
