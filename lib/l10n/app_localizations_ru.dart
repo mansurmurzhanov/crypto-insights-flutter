@@ -79,4 +79,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get failedToLoadChart => 'Не удалось загрузить график';
+
+  @override
+  String get retry => 'Повторить';
+
+  @override
+  String get noInternetConnection => 'Нет подключения к интернету';
+
+  @override
+  String get checkNetworkAndTryAgain =>
+      'Проверьте подключение к сети и попробуйте снова.';
+
+  @override
+  String get somethingWentWrong => 'Что-то пошло не так';
+
+  @override
+  String get noCoinsFound => 'Монеты не найдены';
 }

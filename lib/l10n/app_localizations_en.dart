@@ -79,4 +79,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToLoadChart => 'Failed to load chart';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get checkNetworkAndTryAgain =>
+      'Please check your network and try again.';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get noCoinsFound => 'No coins found';
 }

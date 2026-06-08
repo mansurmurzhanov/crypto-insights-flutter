@@ -15,6 +15,8 @@ import '../bloc/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 @RoutePage()
 class CoinDetailPage extends StatelessWidget {
@@ -63,15 +65,87 @@ class CoinDetailPage extends StatelessWidget {
         child: BlocBuilder<CoinDetailBloc, CoinDetailState>(
           builder: (context, state) {
             if (state.status == CoinDetailStatus.loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: ListView(
+                  children: [
+                    Container(
+                      height: 32,
+                      width: 180,
+                      color: AppColors.skeleton,
+                    ),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(
+                      height: 16,
+                      width: 80,
+                      color: AppColors.skeleton,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    Container(
+                      height: 48,
+                      color: AppColors.skeleton,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    Container(
+                      height: 40,
+                      color: AppColors.skeleton,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Container(
+                      height: 200,
+                      color: AppColors.skeleton,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    Container(height: 16, color: AppColors.skeleton),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(height: 16, color: AppColors.skeleton),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(height: 16, color: AppColors.skeleton),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(height: 16, color: AppColors.skeleton),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(height: 16, color: AppColors.skeleton),
+                    const SizedBox(height: AppSpacing.md2),
+                    Container(height: 16, color: AppColors.skeleton),
+                  ],
+                ),
               );
             }
 
             if (state.status == CoinDetailStatus.failure) {
               return Center(
-                child: Text(
-                  state.errorMessage ?? 'Unknown error',
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.wifi_off,
+                      size: 48,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      state.errorMessage == 'noInternetConnection'
+                          ? AppLocalizations.of(context)!.noInternetConnection
+                          : AppLocalizations.of(context)!.somethingWentWrong,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      AppLocalizations.of(context)!.checkNetworkAndTryAgain,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        context.read<CoinDetailBloc>().add(
+                          LoadCoinDetail(coinId),
+                        );
+                      },
+                      icon: const Icon(Icons.refresh),
+                      label: Text(
+                        AppLocalizations.of(context)!.retry,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }
@@ -82,7 +156,7 @@ class CoinDetailPage extends StatelessWidget {
               final favoritesBloc = context.read<FavoritesBloc>();
 
               return Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 child: ListView(
                   children: [
                     Text(
@@ -91,9 +165,9 @@ class CoinDetailPage extends StatelessWidget {
                           .textTheme
                           .headlineMedium,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(coin.symbol.toUpperCase()),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md2),
                     ElevatedButton.icon(
                       onPressed: () {
                         favoritesBloc.add(
@@ -113,7 +187,7 @@ class CoinDetailPage extends StatelessWidget {
                         AppLocalizations.of(context)!.addToFavorites,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.md),
                     BlocBuilder<CoinChartBloc, CoinChartState>(
                       builder: (context, chartState) {
                         return Row(
@@ -131,7 +205,7 @@ class CoinDetailPage extends StatelessWidget {
                                 );
                               },
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             ChoiceChip(
                               label: const Text('7D'),
                               selected: chartState.selectedDays == 7,
@@ -144,7 +218,7 @@ class CoinDetailPage extends StatelessWidget {
                                 );
                               },
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             ChoiceChip(
                               label: const Text('30D'),
                               selected: chartState.selectedDays == 30,
@@ -161,7 +235,7 @@ class CoinDetailPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.md),
                     SizedBox(
                       height: 200,
                       child: BlocBuilder<CoinChartBloc, CoinChartState>(
@@ -193,7 +267,7 @@ class CoinDetailPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.lg),
                     Text('${AppLocalizations.of(context)!.price}: ${coin.currentPrice}'),
                     Text('${AppLocalizations.of(context)!.marketCap}: ${coin.marketCap}'),
                     Text('${AppLocalizations.of(context)!.volume}: ${coin.volume}'),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app/bloc/theme_mode/theme_mode_cubit.dart';
 import '../../../app/bloc/locale/locale_cubit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../core/theme/app_spacing.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           children: [
             ElevatedButton(
@@ -30,7 +31,7 @@ class SettingsPage extends StatelessWidget {
                 AppLocalizations.of(context)!.light,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md2),
             ElevatedButton(
               onPressed: () {
                 context.read<ThemeModeCubit>().setDark();
@@ -39,7 +40,7 @@ class SettingsPage extends StatelessWidget {
                 AppLocalizations.of(context)!.dark,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md2),
             ElevatedButton(
               onPressed: () {
                 context.read<ThemeModeCubit>().setSystem();
@@ -48,9 +49,9 @@ class SettingsPage extends StatelessWidget {
                 AppLocalizations.of(context)!.system,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.lg),
             const Divider(),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.lg),
             ElevatedButton(
               onPressed: () {
                 context.read<LocaleCubit>().setEnglish();
@@ -59,7 +60,7 @@ class SettingsPage extends StatelessWidget {
                 AppLocalizations.of(context)!.english,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md2),
             ElevatedButton(
               onPressed: () {
                 context.read<LocaleCubit>().setRussian();

@@ -40,10 +40,20 @@ class CoinDetailBloc
         ),
       );
     } catch (e) {
+      String message = 'somethingWentWrong';
+
+      final error = e.toString().toLowerCase();
+
+      if (error.contains('connection') ||
+          error.contains('socket') ||
+          error.contains('network')) {
+        message = 'noInternetConnection';
+      }
+
       emit(
         state.copyWith(
           status: CoinDetailStatus.failure,
-          errorMessage: e.toString(),
+          errorMessage: message,
         ),
       );
     }

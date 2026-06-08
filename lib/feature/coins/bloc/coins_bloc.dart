@@ -39,10 +39,20 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
       ),
     );
   } catch (e) {
+    String message = 'somethingWentWrong';
+
+    final error = e.toString().toLowerCase();
+
+    if (error.contains('connection') ||
+        error.contains('socket') ||
+        error.contains('network')) {
+      message = 'noInternetConnection';
+    }
+
     emit(
       state.copyWith(
         status: CoinsStatus.failure,
-        error: e.toString(),
+        error: message,
       ),
     );
   }
