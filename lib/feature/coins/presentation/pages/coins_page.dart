@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/router/app_router.dart';
 import '../../../../l10n/app_localizations.dart';
+
+import '../widgets/coin_tile.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -185,37 +186,8 @@ class CoinsPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final coin = filteredCoins[index];
 
-                          return ListTile(
-                            onTap: () {
-                              context.router.push(
-                                CoinDetailRoute(
-                                  coinId: coin.id,
-                                ),
-                              );
-                            },
-                            leading: CachedNetworkImage(
-                              imageUrl: coin.image,
-                              width: 40,
-                              height: 40,
-                              placeholder: (context, url) => const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const CircleAvatar(
-                                    child: Icon(Icons.currency_bitcoin),
-                                  ),
-                            ),
-                            title: Text(coin.name),
-                            subtitle: Text(
-                              coin.symbol.toUpperCase(),
-                            ),
-                            trailing: Text(
-                              '\$${coin.currentPrice}',
-                            ),
+                          return CoinTile(
+                            coin: coin,
                           );
                         },
                       ),
