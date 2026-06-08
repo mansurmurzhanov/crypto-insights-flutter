@@ -117,7 +117,7 @@ lib/
 │   └── app_localizations.dart
 │
 └── main.dart
-
+```
 
 ## Tech Stack
 
