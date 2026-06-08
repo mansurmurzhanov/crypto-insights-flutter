@@ -9,9 +9,9 @@ import '../bloc/coin_detail_bloc.dart';
 import '../bloc/coin_detail_event.dart';
 import '../bloc/coin_detail_state.dart';
 
-import '../chart/coin_chart_bloc.dart';
-import '../chart/coin_chart_event.dart';
-import '../chart/coin_chart_state.dart';
+import '../bloc/coin_chart_bloc.dart';
+import '../bloc/coin_chart_event.dart';
+import '../bloc/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
 import '../../../../l10n/app_localizations.dart';

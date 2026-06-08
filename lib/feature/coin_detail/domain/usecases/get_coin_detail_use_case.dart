@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import '../entities/coin_detail_entity.dart';
 import '../repositories/coin_detail_repository.dart';
 
+@injectable
 class GetCoinDetailUseCase {
   final CoinDetailRepository repository;
 

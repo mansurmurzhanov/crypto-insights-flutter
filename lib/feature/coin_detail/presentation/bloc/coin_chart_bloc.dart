@@ -1,9 +1,11 @@
+import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/usecases/get_coin_chart_use_case.dart';
 import 'coin_chart_event.dart';
 import 'coin_chart_state.dart';
 
+@injectable
 class CoinChartBloc
     extends Bloc<CoinChartEvent, CoinChartState> {
   final GetCoinChartUseCase getCoinChartUseCase;

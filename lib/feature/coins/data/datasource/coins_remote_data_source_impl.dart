@@ -8,10 +8,20 @@ import 'coins_remote_data_source.dart';
 class CoinsRemoteDataSourceImpl implements CoinsRemoteDataSource {
   final DioClient client;
 
+  List<CoinModel>? _cachedCoins;
+  DateTime? _lastFetchTime;
+
   CoinsRemoteDataSourceImpl(this.client);
 
   @override
   Future<List<CoinModel>> getCoins() async {
+    if (_cachedCoins != null &&
+        _lastFetchTime != null &&
+        DateTime.now().difference(_lastFetchTime!) <
+            const Duration(seconds: 60)) {
+      return _cachedCoins!;
+    }
+
     final response = await client.dio.get(
       '/coins/markets',
       queryParameters: {
@@ -22,8 +32,13 @@ class CoinsRemoteDataSourceImpl implements CoinsRemoteDataSource {
       },
     );
 
-    return (response.data as List)
+    final coins = (response.data as List)
         .map((e) => CoinModel.fromJson(e))
         .toList();
+
+    _cachedCoins = coins;
+    _lastFetchTime = DateTime.now();
+
+    return coins;
   }
 }

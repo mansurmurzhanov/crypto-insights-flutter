@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:crypto_insights/feature/favorites/domain/favorites_repository.dart';
 
 
+@LazySingleton(as: FavoritesRepository)
 class FavoritesRepositoryImpl implements FavoritesRepository {
   static const _key = 'favorites';
 

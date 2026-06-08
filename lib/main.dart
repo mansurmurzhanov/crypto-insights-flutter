@@ -22,10 +22,10 @@ Future<void> main() async {
 MultiBlocProvider(
   providers: [
     BlocProvider(
-      create: (_) => ThemeModeCubit(),
+      create: (_) => getIt<ThemeModeCubit>(),
     ),
     BlocProvider(
-      create: (_) => LocaleCubit(),
+      create: (_) => getIt<LocaleCubit>(),
     ),
 
     BlocProvider(

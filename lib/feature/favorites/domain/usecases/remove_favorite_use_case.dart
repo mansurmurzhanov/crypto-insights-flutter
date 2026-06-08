@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import '../favorites_repository.dart';
 
+@injectable
 class RemoveFavoriteUseCase {
   final FavoritesRepository repository;
 

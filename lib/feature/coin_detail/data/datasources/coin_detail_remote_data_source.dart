@@ -10,10 +10,13 @@ abstract class CoinDetailRemoteDataSource {
   );
 }
 
-@Injectable(as: CoinDetailRemoteDataSource)
+@LazySingleton(as: CoinDetailRemoteDataSource)
 class CoinDetailRemoteDataSourceImpl
     implements CoinDetailRemoteDataSource {
   final DioClient dioClient;
+
+  final Map<String, CoinDetailModel> _cache = {};
+  final Map<String, DateTime> _cacheTime = {};
 
   CoinDetailRemoteDataSourceImpl(
     this.dioClient,
@@ -23,12 +26,24 @@ class CoinDetailRemoteDataSourceImpl
   Future<CoinDetailModel> getCoinDetail(
     String coinId,
   ) async {
+    if (_cache.containsKey(coinId) &&
+        _cacheTime.containsKey(coinId) &&
+        DateTime.now().difference(_cacheTime[coinId]!) <
+            const Duration(seconds: 60)) {
+      return _cache[coinId]!;
+    }
+
     final response = await dioClient.dio.get(
       '/coins/$coinId',
     );
 
-    return CoinDetailModel.fromJson(
+    final coinDetail = CoinDetailModel.fromJson(
       response.data,
     );
+
+    _cache[coinId] = coinDetail;
+    _cacheTime[coinId] = DateTime.now();
+
+    return coinDetail;
   }
 }
