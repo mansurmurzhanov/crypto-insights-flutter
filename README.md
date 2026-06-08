@@ -137,6 +137,7 @@ lib/
 - A 60-second in-memory cache was implemented for coin details to reduce duplicate requests and avoid CoinGecko API rate limits.
 - CoinGecko image CDN may occasionally fail to load coin icons on macOS desktop and iOS Simulator due to SSL handshake issues.
 - Fallback image rendering is implemented when image loading fails.
+- Top 100 cryptocurrencies are loaded in a single request, pagination is not required for the current scope.
 
 ## Verified Platforms
 
