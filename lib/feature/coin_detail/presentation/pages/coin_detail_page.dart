@@ -14,6 +14,7 @@ import '../bloc/coin_chart_event.dart';
 import '../bloc/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
+import '../../../favorites/bloc/favorites_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -29,40 +30,64 @@ class CoinDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.coinDetails,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<CoinDetailBloc>()
+            ..add(
+              LoadCoinDetail(coinId),
+            ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: null,
-          ),
-        ],
-      ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => getIt<CoinDetailBloc>()
-              ..add(
-                LoadCoinDetail(coinId),
+        BlocProvider(
+          create: (_) => getIt<CoinChartBloc>()
+            ..add(
+              LoadCoinChart(
+                coinId: coinId,
+                days: 1,
               ),
+            ),
+        ),
+        BlocProvider(
+          create: (_) => getIt<FavoritesBloc>()
+            ..add(
+              LoadFavorites(),
+            ),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context)!.coinDetails,
           ),
-          BlocProvider(
-            create: (_) => getIt<CoinChartBloc>()
-              ..add(
-                LoadCoinChart(
-                  coinId: coinId,
-                  days: 1,
-                ),
-              ),
-          ),
-          BlocProvider(
-            create: (_) => getIt<FavoritesBloc>(),
-          ),
-        ],
-        child: BlocBuilder<CoinDetailBloc, CoinDetailState>(
+          actions: [
+            BlocBuilder<FavoritesBloc, FavoritesState>(
+              builder: (context, favoritesState) {
+                final isFavorite =
+                    favoritesState.favorites.contains(coinId);
+
+                return IconButton(
+                  icon: Icon(
+                    isFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                  ),
+                  onPressed: () {
+                    if (isFavorite) {
+                      context.read<FavoritesBloc>().add(
+                            RemoveFavorite(coinId),
+                          );
+                    } else {
+                      context.read<FavoritesBloc>().add(
+                            AddFavorite(coinId),
+                          );
+                    }
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        body: BlocBuilder<CoinDetailBloc, CoinDetailState>(
           builder: (context, state) {
             if (state.status == CoinDetailStatus.loading) {
               return Padding(
@@ -137,8 +162,8 @@ class CoinDetailPage extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: () {
                         context.read<CoinDetailBloc>().add(
-                          LoadCoinDetail(coinId),
-                        );
+                              LoadCoinDetail(coinId),
+                            );
                       },
                       icon: const Icon(Icons.refresh),
                       label: Text(
@@ -153,7 +178,6 @@ class CoinDetailPage extends StatelessWidget {
             if (state.status == CoinDetailStatus.success &&
                 state.coin != null) {
               final coin = state.coin!;
-              final favoritesBloc = context.read<FavoritesBloc>();
 
               return Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),
@@ -161,33 +185,12 @@ class CoinDetailPage extends StatelessWidget {
                   children: [
                     Text(
                       coin.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(coin.symbol.toUpperCase()),
                     const SizedBox(height: AppSpacing.md2),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        favoritesBloc.add(
-                          AddFavorite(coin.id),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              '${coin.name} ${AppLocalizations.of(context)!.addedToFavorites}',
-                            ),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.favorite_border),
-                      label: Text(
-                        AppLocalizations.of(context)!.addToFavorites,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
+                    
                     BlocBuilder<CoinChartBloc, CoinChartState>(
                       builder: (context, chartState) {
                         return Row(
@@ -198,11 +201,11 @@ class CoinDetailPage extends StatelessWidget {
                               selected: chartState.selectedDays == 1,
                               onSelected: (_) {
                                 context.read<CoinChartBloc>().add(
-                                  ChangeChartPeriod(
-                                    coinId: coinId,
-                                    days: 1,
-                                  ),
-                                );
+                                      ChangeChartPeriod(
+                                        coinId: coinId,
+                                        days: 1,
+                                      ),
+                                    );
                               },
                             ),
                             const SizedBox(width: AppSpacing.sm),
@@ -211,11 +214,11 @@ class CoinDetailPage extends StatelessWidget {
                               selected: chartState.selectedDays == 7,
                               onSelected: (_) {
                                 context.read<CoinChartBloc>().add(
-                                  ChangeChartPeriod(
-                                    coinId: coinId,
-                                    days: 7,
-                                  ),
-                                );
+                                      ChangeChartPeriod(
+                                        coinId: coinId,
+                                        days: 7,
+                                      ),
+                                    );
                               },
                             ),
                             const SizedBox(width: AppSpacing.sm),
@@ -224,11 +227,11 @@ class CoinDetailPage extends StatelessWidget {
                               selected: chartState.selectedDays == 30,
                               onSelected: (_) {
                                 context.read<CoinChartBloc>().add(
-                                  ChangeChartPeriod(
-                                    coinId: coinId,
-                                    days: 30,
-                                  ),
-                                );
+                                      ChangeChartPeriod(
+                                        coinId: coinId,
+                                        days: 30,
+                                      ),
+                                    );
                               },
                             ),
                           ],

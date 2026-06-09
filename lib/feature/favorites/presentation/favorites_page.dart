@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../coin_detail/domain/entities/coin_detail_entity.dart';
+import '../../coin_detail/domain/usecases/get_coin_detail_use_case.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
+import '../../../app/router/app_router.dart';
 
 @RoutePage()
 
@@ -69,24 +72,56 @@ class FavoritesPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final coinId = state.favorites[index];
 
-                return ListTile(
-                  title: Text(coinId),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline),
-                    onPressed: () {
-                      context.read<FavoritesBloc>().add(
-                        RemoveFavorite(coinId),
+                return FutureBuilder<CoinDetailEntity>(
+                  future: getIt<GetCoinDetailUseCase>()(coinId),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const ListTile(
+                        title: Text('Loading...'),
                       );
+                    }
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '$coinId ${AppLocalizations.of(context)!.removedFromFavorites}',
+                    final coin = snapshot.data!;
+
+                    return ListTile(
+                      onTap: () {
+                        context.router.push(
+                          CoinDetailRoute(
+                            coinId: coinId,
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(coin.image),
+                      ),
+                      title: Text(coin.name),
+                      subtitle: Text(coin.symbol.toUpperCase()),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '\$${coin.currentPrice.toStringAsFixed(2)}',
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline),
+                            onPressed: () {
+                              context.read<FavoritesBloc>().add(
+                                RemoveFavorite(coinId),
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '${coin.name} ${AppLocalizations.of(context)!.removedFromFavorites}',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
               },
             );
