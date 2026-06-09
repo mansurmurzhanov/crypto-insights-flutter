@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
+import '../../../../core/extensions/currency_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/router/app_router.dart';
@@ -43,7 +45,7 @@ class CoinTile extends StatelessWidget {
         coin.symbol.toUpperCase(),
       ),
       trailing: Text(
-        '\$${coin.currentPrice}',
+        coin.currentPrice.formattedCurrency(),
       ),
     );
   }

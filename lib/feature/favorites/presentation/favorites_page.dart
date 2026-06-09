@@ -10,6 +10,7 @@ import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
 import '../../../app/router/app_router.dart';
+import '../../../../core/extensions/currency_extension.dart';
 
 @RoutePage()
 
@@ -100,7 +101,7 @@ class FavoritesPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            '\$${coin.currentPrice.toStringAsFixed(2)}',
+                            coin.currentPrice.formattedCurrency(),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete_outline),

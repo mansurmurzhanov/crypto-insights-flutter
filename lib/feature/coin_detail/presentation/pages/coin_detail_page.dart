@@ -18,6 +18,7 @@ import '../../../favorites/bloc/favorites_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/extensions/currency_extension.dart';
 
 @RoutePage()
 class CoinDetailPage extends StatelessWidget {
@@ -271,12 +272,22 @@ class CoinDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    Text('${AppLocalizations.of(context)!.price}: ${coin.currentPrice}'),
-                    Text('${AppLocalizations.of(context)!.marketCap}: ${coin.marketCap}'),
-                    Text('${AppLocalizations.of(context)!.volume}: ${coin.volume}'),
+                    Text(
+                      '${AppLocalizations.of(context)!.price}: ${coin.currentPrice.formattedCurrency()}',
+                    ),
+                    Text(
+                      '${AppLocalizations.of(context)!.marketCap}: ${coin.marketCap.formattedCurrency()}',
+                    ),
+                    Text(
+                      '${AppLocalizations.of(context)!.volume}: ${coin.volume.formattedCurrency()}',
+                    ),
                     Text('${AppLocalizations.of(context)!.rank}: ${coin.marketCapRank}'),
-                    Text('${AppLocalizations.of(context)!.ath}: ${coin.ath}'),
-                    Text('${AppLocalizations.of(context)!.atl}: ${coin.atl}'),
+                    Text(
+                      '${AppLocalizations.of(context)!.ath}: ${coin.ath.formattedCurrency()}',
+                    ),
+                    Text(
+                      '${AppLocalizations.of(context)!.atl}: ${coin.atl.formattedCurrency()}',
+                    ),
                   ],
                 ),
               );

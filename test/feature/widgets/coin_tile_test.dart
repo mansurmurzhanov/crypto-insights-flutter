@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:crypto_insights/feature/coins/domain/entities/coin_entity.dart';
 import 'package:crypto_insights/feature/coins/presentation/widgets/coin_tile.dart';
+import 'package:crypto_insights/core/extensions/currency_extension.dart';
 
 void main() {
   testWidgets(
@@ -30,7 +31,10 @@ void main() {
 
       expect(find.text('Bitcoin'), findsOneWidget);
       expect(find.text('BTC'), findsOneWidget);
-      expect(find.text('\$100000.0'), findsOneWidget);
+      expect(
+        find.text(coin.currentPrice.formattedCurrency()),
+        findsOneWidget,
+      );
       
     },
   );
