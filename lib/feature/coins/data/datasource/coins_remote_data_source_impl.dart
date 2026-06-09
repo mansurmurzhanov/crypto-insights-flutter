@@ -14,8 +14,11 @@ class CoinsRemoteDataSourceImpl implements CoinsRemoteDataSource {
   CoinsRemoteDataSourceImpl(this.client);
 
   @override
-  Future<List<CoinModel>> getCoins() async {
-    if (_cachedCoins != null &&
+  Future<List<CoinModel>> getCoins({
+    bool forceRefresh = false,
+  }) async {
+    if (!forceRefresh &&
+        _cachedCoins != null &&
         _lastFetchTime != null &&
         DateTime.now().difference(_lastFetchTime!) <
             const Duration(seconds: 60)) {

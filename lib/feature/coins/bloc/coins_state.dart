@@ -31,12 +31,13 @@ class CoinsState {
     String? error,
     String? sortBy,
     int? visibleCount,
+    bool clearError = false,
   }) {
     return CoinsState(
       status: status ?? this.status,
       coins: coins ?? this.coins,
       query: query ?? this.query,
-      error: error ?? this.error,
+      error: clearError ? null : (error ?? this.error),
       sortBy: sortBy ?? this.sortBy,
       visibleCount: visibleCount ?? this.visibleCount,
     );

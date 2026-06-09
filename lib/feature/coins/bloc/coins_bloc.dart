@@ -39,6 +39,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
         status: CoinsStatus.success,
         coins: coins,
         visibleCount: 20,
+        clearError: true,
       ),
     );
   } catch (e) {
@@ -61,16 +62,48 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
   }
 }
 
-  Future<void> _onRefreshCoins(
-    RefreshCoins event,
-    Emitter<CoinsState> emit,
-  ) async {
-    await _onLoadCoins(
-      LoadCoins(),
-      emit,
+Future<void> _onRefreshCoins(
+  RefreshCoins event,
+  Emitter<CoinsState> emit,
+) async {
+  emit(
+    state.copyWith(
+      status: CoinsStatus.loading,
+    ),
+  );
+
+  try {
+    final coins = await getCoinsUseCase(
+      forceRefresh: true,
+    );
+
+    emit(
+      state.copyWith(
+        status: CoinsStatus.success,
+        coins: coins,
+        visibleCount: 20,
+        clearError: true,
+      ),
+    );
+  } catch (e) {
+    String message = 'somethingWentWrong';
+
+    final error = e.toString().toLowerCase();
+
+    if (error.contains('connection') ||
+        error.contains('socket') ||
+        error.contains('network')) {
+      message = 'noInternetConnection';
+    }
+
+    emit(
+      state.copyWith(
+        status: CoinsStatus.failure,
+        error: message,
+      ),
     );
   }
-
+}
   void _onSearchCoins(
     SearchCoins event,
     Emitter<CoinsState> emit,

@@ -9,7 +9,11 @@ class GetCoinsUseCase {
 
   GetCoinsUseCase(this.repository);
 
-  Future<List<CoinEntity>> call() {
-    return repository.getCoins();
+  Future<List<CoinEntity>> call({
+    bool forceRefresh = false,
+  }) {
+    return repository.getCoins(
+      forceRefresh: forceRefresh,
+    );
   }
 }

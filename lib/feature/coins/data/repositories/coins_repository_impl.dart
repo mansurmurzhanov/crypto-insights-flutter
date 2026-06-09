@@ -11,8 +11,13 @@ class CoinsRepositoryImpl implements CoinsRepository {
   CoinsRepositoryImpl(this.remote);
 
   @override
-  Future<List<CoinEntity>> getCoins() async {
-    final result = await remote.getCoins();
+  Future<List<CoinEntity>> getCoins({
+    bool forceRefresh = false,
+  }) async {
+    final result = await remote.getCoins(
+      forceRefresh: forceRefresh,
+    );
+
     return result;
   }
 }
