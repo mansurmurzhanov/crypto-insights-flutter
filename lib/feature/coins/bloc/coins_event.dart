@@ -14,3 +14,4 @@ final class SortCoins extends CoinsEvent {
 
   SortCoins(this.sortBy);
 }
+final class LoadMoreCoins extends CoinsEvent {}

@@ -13,6 +13,7 @@ class CoinsState {
   final String query;
   final String? error;
   final String sortBy;
+  final int visibleCount;
 
   const CoinsState({
     this.status = CoinsStatus.initial,
@@ -20,6 +21,7 @@ class CoinsState {
     this.query = '',
     this.error,
     this.sortBy = 'marketCap',
+    this.visibleCount = 20,
   });
 
   CoinsState copyWith({
@@ -28,6 +30,7 @@ class CoinsState {
     String? query,
     String? error,
     String? sortBy,
+    int? visibleCount,
   }) {
     return CoinsState(
       status: status ?? this.status,
@@ -35,6 +38,7 @@ class CoinsState {
       query: query ?? this.query,
       error: error ?? this.error,
       sortBy: sortBy ?? this.sortBy,
+      visibleCount: visibleCount ?? this.visibleCount,
     );
   }
 }

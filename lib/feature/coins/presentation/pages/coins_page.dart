@@ -185,6 +185,10 @@ class CoinsPage extends StatelessWidget {
                 return coin.name.toLowerCase().contains(query) ||
                     coin.symbol.toLowerCase().contains(query);
               }).toList();
+
+              final visibleCoins =
+                  filteredCoins.take(state.visibleCount).toList();
+
               return Column(
                 children: [
                   Padding(
@@ -210,9 +214,15 @@ class CoinsPage extends StatelessWidget {
                       },
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: filteredCoins.length,
+                        itemCount: visibleCoins.length,
                         itemBuilder: (context, index) {
-                          final coin = filteredCoins[index];
+                          if (index >= visibleCoins.length - 5) {
+                            context.read<CoinsBloc>().add(
+                              LoadMoreCoins(),
+                            );
+                          }
+
+                          final coin = visibleCoins[index];
 
                           return CoinTile(
                             coin: coin,

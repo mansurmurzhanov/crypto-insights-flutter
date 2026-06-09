@@ -16,6 +16,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
     on<RefreshCoins>(_onRefreshCoins);
     on<SearchCoins>(_onSearchCoins);
     on<SortCoins>(_onSortCoins);
+    on<LoadMoreCoins>(_onLoadMoreCoins);
   }
 
   Future<void> _onLoadCoins(
@@ -37,6 +38,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
       state.copyWith(
         status: CoinsStatus.success,
         coins: coins,
+        visibleCount: 20,
       ),
     );
   } catch (e) {
@@ -112,6 +114,22 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
       state.copyWith(
         coins: sortedCoins,
         sortBy: event.sortBy,
+      ),
+    );
+  }
+
+  void _onLoadMoreCoins(
+    LoadMoreCoins event,
+    Emitter<CoinsState> emit,
+  ) {
+    if (state.visibleCount >= state.coins.length) {
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        visibleCount: (state.visibleCount + 20)
+            .clamp(0, state.coins.length),
       ),
     );
   }
