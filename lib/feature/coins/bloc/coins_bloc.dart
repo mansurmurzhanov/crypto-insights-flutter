@@ -15,6 +15,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
     on<LoadCoins>(_onLoadCoins);
     on<RefreshCoins>(_onRefreshCoins);
     on<SearchCoins>(_onSearchCoins);
+    on<SortCoins>(_onSortCoins);
   }
 
   Future<void> _onLoadCoins(
@@ -75,6 +76,42 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
     emit(
       state.copyWith(
         query: event.query,
+      ),
+    );
+  }
+
+  void _onSortCoins(
+    SortCoins event,
+    Emitter<CoinsState> emit,
+  ) {
+    final sortedCoins = List.of(state.coins);
+
+    switch (event.sortBy) {
+      case 'marketCap':
+        sortedCoins.sort(
+          (a, b) => a.marketCapRank.compareTo(b.marketCapRank),
+        );
+        break;
+      case 'change24hDesc':
+        sortedCoins.sort(
+          (a, b) => b.priceChange24h.compareTo(a.priceChange24h),
+        );
+        break;
+
+      case 'change24hAsc':
+        sortedCoins.sort(
+          (a, b) => a.priceChange24h.compareTo(b.priceChange24h),
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    emit(
+      state.copyWith(
+        coins: sortedCoins,
+        sortBy: event.sortBy,
       ),
     );
   }

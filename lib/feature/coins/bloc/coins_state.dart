@@ -12,12 +12,14 @@ class CoinsState {
   final List<CoinEntity> coins;
   final String query;
   final String? error;
+  final String sortBy;
 
   const CoinsState({
     this.status = CoinsStatus.initial,
     this.coins = const [],
     this.query = '',
     this.error,
+    this.sortBy = 'marketCap',
   });
 
   CoinsState copyWith({
@@ -25,12 +27,14 @@ class CoinsState {
     List<CoinEntity>? coins,
     String? query,
     String? error,
+    String? sortBy,
   }) {
     return CoinsState(
       status: status ?? this.status,
       coins: coins ?? this.coins,
       query: query ?? this.query,
       error: error ?? this.error,
+      sortBy: sortBy ?? this.sortBy,
     );
   }
 }

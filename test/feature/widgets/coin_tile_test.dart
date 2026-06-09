@@ -15,6 +15,7 @@ void main() {
         image: '',
         currentPrice: 100000,
         priceChange24h: 5.2,
+        marketCapRank: 1,
       );
 
       await tester.pumpWidget(
@@ -30,6 +31,7 @@ void main() {
       expect(find.text('Bitcoin'), findsOneWidget);
       expect(find.text('BTC'), findsOneWidget);
       expect(find.text('\$100000.0'), findsOneWidget);
+      
     },
   );
 }

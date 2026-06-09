@@ -25,6 +25,34 @@ class CoinsPage extends StatelessWidget {
           AppLocalizations.of(context)!.cryptoInsights,
         ),
         actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.sort),
+            onSelected: (value) {
+              context.read<CoinsBloc>().add(
+                SortCoins(value),
+              );
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'marketCap',
+                child: Text(
+                  AppLocalizations.of(context)!.sortByMarketCap,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'change24hDesc',
+                child: Text(
+                  AppLocalizations.of(context)!.topGainers24h,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'change24hAsc',
+                child: Text(
+                  AppLocalizations.of(context)!.topLosers24h,
+                ),
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {

@@ -95,4 +95,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noCoinsFound => 'Монеты не найдены';
+
+  @override
+  String get sortByMarketCap => 'По капитализации';
+
+  @override
+  String get topGainers24h => 'Лидеры роста (24ч)';
+
+  @override
+  String get topLosers24h => 'Лидеры падения (24ч)';
 }

@@ -95,4 +95,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noCoinsFound => 'No coins found';
+
+  @override
+  String get sortByMarketCap => 'By Market Cap';
+
+  @override
+  String get topGainers24h => 'Top Gainers (24h)';
+
+  @override
+  String get topLosers24h => 'Top Losers (24h)';
 }

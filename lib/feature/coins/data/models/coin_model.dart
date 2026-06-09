@@ -8,6 +8,7 @@ class CoinModel extends CoinEntity {
     required super.image,
     required super.currentPrice,
     required super.priceChange24h,
+    required super.marketCapRank,
   });
 
   factory CoinModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +20,7 @@ class CoinModel extends CoinEntity {
       currentPrice: (json['current_price'] as num).toDouble(),
       priceChange24h:
           (json['price_change_percentage_24h'] as num?)?.toDouble() ?? 0,
+      marketCapRank: json['market_cap_rank'] as int? ?? 999999,
     );
   }
 }

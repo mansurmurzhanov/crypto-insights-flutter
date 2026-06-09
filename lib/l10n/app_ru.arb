@@ -33,5 +33,11 @@
   "noInternetConnection": "Нет подключения к интернету",
   "checkNetworkAndTryAgain": "Проверьте подключение к сети и попробуйте снова.",
   "somethingWentWrong": "Что-то пошло не так",
-  "noCoinsFound": "Монеты не найдены"
+  "noCoinsFound": "Монеты не найдены",
+
+  "sortByMarketCap": "По капитализации",
+
+  "topGainers24h": "Лидеры роста (24ч)",
+
+  "topLosers24h": "Лидеры падения (24ч)"
 }

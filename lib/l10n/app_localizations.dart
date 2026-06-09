@@ -271,6 +271,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No coins found'**
   String get noCoinsFound;
+
+  /// No description provided for @sortByMarketCap.
+  ///
+  /// In en, this message translates to:
+  /// **'By Market Cap'**
+  String get sortByMarketCap;
+
+  /// No description provided for @topGainers24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Gainers (24h)'**
+  String get topGainers24h;
+
+  /// No description provided for @topLosers24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Losers (24h)'**
+  String get topLosers24h;
 }
 
 class _AppLocalizationsDelegate

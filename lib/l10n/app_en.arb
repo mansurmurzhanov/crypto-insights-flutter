@@ -33,5 +33,11 @@
   "noInternetConnection": "No internet connection",
   "checkNetworkAndTryAgain": "Please check your network and try again.",
   "somethingWentWrong": "Something went wrong",
-  "noCoinsFound": "No coins found"
+  "noCoinsFound": "No coins found",
+
+  "sortByMarketCap": "By Market Cap",
+
+  "topGainers24h": "Top Gainers (24h)",
+
+  "topLosers24h": "Top Losers (24h)"
 }

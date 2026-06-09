@@ -9,3 +9,8 @@ final class SearchCoins extends CoinsEvent {
 
   SearchCoins(this.query);
 }
+final class SortCoins extends CoinsEvent {
+  final String sortBy;
+
+  SortCoins(this.sortBy);
+}
