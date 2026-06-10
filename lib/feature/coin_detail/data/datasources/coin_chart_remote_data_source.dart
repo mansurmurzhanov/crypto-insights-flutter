@@ -1,6 +1,9 @@
 import '../../../../core/network/dio_client.dart';
 import '../models/coin_chart_point_model.dart';
 import 'package:injectable/injectable.dart';
+import 'package:dio/dio.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/error/failure_mapper.dart';
 
 abstract class CoinChartRemoteDataSource {
   Future<List<CoinChartPointModel>> getChart(
@@ -34,28 +37,37 @@ class CoinChartRemoteDataSourceImpl
       return _cache[cacheKey]!;
     }
 
-    final response = await dioClient.dio.get(
-      '/coins/$coinId/market_chart',
-      queryParameters: {
-        'vs_currency': 'usd',
-        'days': days,
-      },
-    );
+    try {
+      final response = await dioClient.dio.get(
+        '/coins/$coinId/market_chart',
+        queryParameters: {
+          'vs_currency': 'usd',
+          'days': days,
+        },
+      );
 
-    final prices =
-        response.data['prices'] as List<dynamic>;
+      final prices = response.data['prices'];
 
-    final chartPoints = prices
-        .map(
-          (e) => CoinChartPointModel.fromJson(
-            e,
-          ),
-        )
-        .toList();
+      if (prices == null || prices is! List) {
+        throw const ServerFailure(
+          'Invalid chart response',
+        );
+      }
 
-    _cache[cacheKey] = chartPoints;
-    _cacheTime[cacheKey] = DateTime.now();
+      final chartPoints = prices
+          .map(
+            (e) => CoinChartPointModel.fromJson(
+              e,
+            ),
+          )
+          .toList();
 
-    return chartPoints;
+      _cache[cacheKey] = chartPoints;
+      _cacheTime[cacheKey] = DateTime.now();
+
+      return chartPoints;
+    } on DioException catch (e) {
+      throw mapDioException(e);
+    }
   }
 }
