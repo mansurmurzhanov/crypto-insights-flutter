@@ -6,6 +6,7 @@ import 'package:crypto_insights/feature/coins/bloc/coins_bloc.dart';
 import 'package:crypto_insights/feature/coins/bloc/coins_event.dart';
 import 'package:crypto_insights/feature/coins/bloc/coins_state.dart';
 import 'package:crypto_insights/feature/coins/domain/usecases/get_coins_use_case.dart';
+import 'package:crypto_insights/core/error/failure.dart';
 
 class MockGetCoinsUseCase extends Mock
     implements GetCoinsUseCase {}
@@ -53,7 +54,7 @@ void main() {
       when(
         () => mockGetCoinsUseCase(),
       ).thenThrow(
-        Exception('connection error'),
+        const NetworkFailure('no internet'),
       );
 
       return CoinsBloc(

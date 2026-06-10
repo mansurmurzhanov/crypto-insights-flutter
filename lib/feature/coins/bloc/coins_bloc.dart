@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/error/failure.dart';
 
 import '../domain/usecases/get_coins_use_case.dart';
 import 'coins_event.dart';
@@ -45,11 +46,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
   } catch (e) {
     String message = 'somethingWentWrong';
 
-    final error = e.toString().toLowerCase();
-
-    if (error.contains('connection') ||
-        error.contains('socket') ||
-        error.contains('network')) {
+    if (e is NetworkFailure) {
       message = 'noInternetConnection';
     }
 
@@ -88,11 +85,7 @@ Future<void> _onRefreshCoins(
   } catch (e) {
     String message = 'somethingWentWrong';
 
-    final error = e.toString().toLowerCase();
-
-    if (error.contains('connection') ||
-        error.contains('socket') ||
-        error.contains('network')) {
+    if (e is NetworkFailure) {
       message = 'noInternetConnection';
     }
 

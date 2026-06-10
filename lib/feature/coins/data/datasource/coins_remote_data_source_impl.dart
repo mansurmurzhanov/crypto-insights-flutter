@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../core/network/dio_client.dart';
+import '../../../../core/error/failure_mapper.dart';
 import '../models/coin_model.dart';
 import 'coins_remote_data_source.dart';
 
@@ -25,23 +27,27 @@ class CoinsRemoteDataSourceImpl implements CoinsRemoteDataSource {
       return _cachedCoins!;
     }
 
-    final response = await client.dio.get(
-      '/coins/markets',
-      queryParameters: {
-        'vs_currency': 'usd',
-        'order': 'market_cap_desc',
-        'per_page': 100,
-        'page': 1,
-      },
-    );
+    try {
+      final response = await client.dio.get(
+        '/coins/markets',
+        queryParameters: {
+          'vs_currency': 'usd',
+          'order': 'market_cap_desc',
+          'per_page': 100,
+          'page': 1,
+        },
+      );
 
-    final coins = (response.data as List)
-        .map((e) => CoinModel.fromJson(e))
-        .toList();
+      final coins = (response.data as List)
+          .map((e) => CoinModel.fromJson(e))
+          .toList();
 
-    _cachedCoins = coins;
-    _lastFetchTime = DateTime.now();
+      _cachedCoins = coins;
+      _lastFetchTime = DateTime.now();
 
-    return coins;
+      return coins;
+    } on DioException catch (e) {
+      throw mapDioException(e);
+    }
   }
 }
