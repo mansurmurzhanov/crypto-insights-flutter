@@ -10,6 +10,7 @@ import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
 import '../../../app/router/app_router.dart';
 import '../../../../core/extensions/currency_extension.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -34,9 +35,9 @@ class FavoritesPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.favorite_border, size: 64),
-                  SizedBox(height: 16),
+                  SizedBox(height: AppSpacing.md),
                   Text(context.l10n.noFavoritesYet),
-                  SizedBox(height: 8),
+                  SizedBox(height: AppSpacing.sm),
                   Text(context.l10n.addCoinsFromDetails),
                 ],
               ),
