@@ -39,5 +39,7 @@
 
   "topGainers24h": "Top Gainers (24h)",
 
-  "topLosers24h": "Top Losers (24h)"
+  "topLosers24h": "Top Losers (24h)",
+  "theme": "Theme",
+"language": "Language"
 }

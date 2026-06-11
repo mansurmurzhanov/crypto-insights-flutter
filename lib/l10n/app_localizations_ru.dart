@@ -104,4 +104,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get topLosers24h => 'Лидеры падения (24ч)';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get language => 'Язык';
 }

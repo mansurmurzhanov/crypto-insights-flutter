@@ -104,4 +104,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get topLosers24h => 'Top Losers (24h)';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get language => 'Language';
 }

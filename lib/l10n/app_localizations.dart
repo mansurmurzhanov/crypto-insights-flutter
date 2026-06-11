@@ -289,6 +289,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Top Losers (24h)'**
   String get topLosers24h;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
 }
 
 class _AppLocalizationsDelegate
