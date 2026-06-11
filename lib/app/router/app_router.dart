@@ -7,6 +7,7 @@ import '../../feature/coin_detail/presentation/bloc/coin_chart_bloc.dart';
 import '../../feature/coin_detail/presentation/bloc/coin_chart_event.dart';
 import '../../feature/coin_detail/presentation/bloc/coin_detail_bloc.dart';
 import '../../feature/coin_detail/presentation/bloc/coin_detail_event.dart';
+import '../../feature/coin_detail/presentation/models/chart_period.dart';
 import '../../feature/coins/presentation/pages/coins_page.dart';
 import '../../feature/coins/bloc/coins_bloc.dart';
 import '../../feature/coins/bloc/coins_event.dart';
@@ -68,9 +69,8 @@ class CoinDetailRoutePage extends StatelessWidget {
           create: (_) => getIt<CoinDetailBloc>()..add(LoadCoinDetail(coinId)),
         ),
         BlocProvider(
-          create: (_) =>
-              getIt<CoinChartBloc>()
-                ..add(LoadCoinChart(coinId: coinId, days: 1)),
+          create: (_) => getIt<CoinChartBloc>()
+            ..add(LoadCoinChart(coinId: coinId, days: ChartPeriod.day.days)),
         ),
         BlocProvider(
           create: (_) => getIt<FavoritesBloc>()..add(LoadFavorites()),

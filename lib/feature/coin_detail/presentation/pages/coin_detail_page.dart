@@ -17,6 +17,7 @@ import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/extensions/currency_extension.dart';
+import '../models/chart_period.dart';
 
 class CoinDetailPage extends StatelessWidget {
   final String coinId;
@@ -133,35 +134,22 @@ class CoinDetailPage extends StatelessWidget {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ChoiceChip(
-                            label: const Text('24H'),
-                            selected: chartState.selectedDays == 1,
-                            onSelected: (_) {
-                              context.read<CoinChartBloc>().add(
-                                ChangeChartPeriod(coinId: coinId, days: 1),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          ChoiceChip(
-                            label: const Text('7D'),
-                            selected: chartState.selectedDays == 7,
-                            onSelected: (_) {
-                              context.read<CoinChartBloc>().add(
-                                ChangeChartPeriod(coinId: coinId, days: 7),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          ChoiceChip(
-                            label: const Text('30D'),
-                            selected: chartState.selectedDays == 30,
-                            onSelected: (_) {
-                              context.read<CoinChartBloc>().add(
-                                ChangeChartPeriod(coinId: coinId, days: 30),
-                              );
-                            },
-                          ),
+                          for (final period in ChartPeriod.values) ...[
+                            ChoiceChip(
+                              label: Text(period.label),
+                              selected: chartState.selectedDays == period.days,
+                              onSelected: (_) {
+                                context.read<CoinChartBloc>().add(
+                                  ChangeChartPeriod(
+                                    coinId: coinId,
+                                    days: period.days,
+                                  ),
+                                );
+                              },
+                            ),
+                            if (period != ChartPeriod.values.last)
+                              const SizedBox(width: AppSpacing.sm),
+                          ],
                         ],
                       );
                     },
