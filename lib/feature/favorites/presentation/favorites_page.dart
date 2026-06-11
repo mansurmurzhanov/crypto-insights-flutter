@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/injection.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../core/extensions/context_extensions.dart';
 import '../../coin_detail/domain/entities/coin_detail_entity.dart';
 import '../../coin_detail/domain/usecases/get_coin_detail_use_case.dart';
 import '../bloc/favorites_bloc.dart';
@@ -22,7 +22,7 @@ class FavoritesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.favorites,
+          context.l10n.favorites,
         ),
       ),
       body: BlocProvider(
@@ -57,11 +57,11 @@ class FavoritesPage extends StatelessWidget {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      AppLocalizations.of(context)!.noFavoritesYet,
+                      context.l10n.noFavoritesYet,
                     ),
                     SizedBox(height: 8),
                     Text(
-                      AppLocalizations.of(context)!.addCoinsFromDetails,
+                      context.l10n.addCoinsFromDetails,
                     ),
                   ],
                 ),
@@ -113,7 +113,7 @@ class FavoritesPage extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    '${coin.name} ${AppLocalizations.of(context)!.removedFromFavorites}',
+                                    '${coin.name} ${context.l10n.removedFromFavorites}',
                                   ),
                                 ),
                               );

@@ -15,7 +15,7 @@ import '../bloc/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
 import '../../../favorites/bloc/favorites_state.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/extensions/currency_extension.dart';
@@ -58,7 +58,7 @@ class CoinDetailPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            AppLocalizations.of(context)!.coinDetails,
+            context.l10n.coinDetails,
           ),
           actions: [
             BlocBuilder<FavoritesBloc, FavoritesState>(
@@ -150,13 +150,13 @@ class CoinDetailPage extends StatelessWidget {
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       state.errorMessage == 'noInternetConnection'
-                          ? AppLocalizations.of(context)!.noInternetConnection
-                          : AppLocalizations.of(context)!.somethingWentWrong,
+                          ? context.l10n.noInternetConnection
+                          : context.l10n.somethingWentWrong,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      AppLocalizations.of(context)!.checkNetworkAndTryAgain,
+                      context.l10n.checkNetworkAndTryAgain,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -168,7 +168,7 @@ class CoinDetailPage extends StatelessWidget {
                       },
                       icon: const Icon(Icons.refresh),
                       label: Text(
-                        AppLocalizations.of(context)!.retry,
+                        context.l10n.retry,
                       ),
                     ),
                   ],
@@ -253,7 +253,7 @@ class CoinDetailPage extends StatelessWidget {
                           if (chartState.status == CoinChartStatus.failure) {
                             return Center(
                               child: Text(
-                                AppLocalizations.of(context)!.failedToLoadChart,
+                                context.l10n.failedToLoadChart,
                               ),
                             );
                           }
@@ -273,20 +273,20 @@ class CoinDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
-                      '${AppLocalizations.of(context)!.price}: ${coin.currentPrice.formattedCurrency()}',
+                      '${context.l10n.price}: ${coin.currentPrice.formattedCurrency()}',
                     ),
                     Text(
-                      '${AppLocalizations.of(context)!.marketCap}: ${coin.marketCap.formattedCurrency()}',
+                      '${context.l10n.marketCap}: ${coin.marketCap.formattedCurrency()}',
                     ),
                     Text(
-                      '${AppLocalizations.of(context)!.volume}: ${coin.volume.formattedCurrency()}',
+                      '${context.l10n.volume}: ${coin.volume.formattedCurrency()}',
                     ),
-                    Text('${AppLocalizations.of(context)!.rank}: ${coin.marketCapRank}'),
+                    Text('${context.l10n.rank}: ${coin.marketCapRank}'),
                     Text(
-                      '${AppLocalizations.of(context)!.ath}: ${coin.ath.formattedCurrency()}',
+                      '${context.l10n.ath}: ${coin.ath.formattedCurrency()}',
                     ),
                     Text(
-                      '${AppLocalizations.of(context)!.atl}: ${coin.atl.formattedCurrency()}',
+                      '${context.l10n.atl}: ${coin.atl.formattedCurrency()}',
                     ),
                   ],
                 ),

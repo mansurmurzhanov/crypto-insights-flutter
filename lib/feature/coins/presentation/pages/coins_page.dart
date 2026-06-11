@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/router/app_router.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/extensions/context_extensions.dart';
 
 import '../widgets/coin_tile.dart';
 
@@ -22,7 +22,7 @@ class CoinsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.cryptoInsights,
+          context.l10n.cryptoInsights,
         ),
         actions: [
           PopupMenuButton<String>(
@@ -36,19 +36,19 @@ class CoinsPage extends StatelessWidget {
               PopupMenuItem(
                 value: 'marketCap',
                 child: Text(
-                  AppLocalizations.of(context)!.sortByMarketCap,
+                  context.l10n.sortByMarketCap,
                 ),
               ),
               PopupMenuItem(
                 value: 'change24hDesc',
                 child: Text(
-                  AppLocalizations.of(context)!.topGainers24h,
+                  context.l10n.topGainers24h,
                 ),
               ),
               PopupMenuItem(
                 value: 'change24hAsc',
                 child: Text(
-                  AppLocalizations.of(context)!.topLosers24h,
+                  context.l10n.topLosers24h,
                 ),
               ),
             ],
@@ -155,13 +155,13 @@ class CoinsPage extends StatelessWidget {
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       state.error == 'noInternetConnection'
-                          ? AppLocalizations.of(context)!.noInternetConnection
-                          : AppLocalizations.of(context)!.somethingWentWrong,
+                          ? context.l10n.noInternetConnection
+                          : context.l10n.somethingWentWrong,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      AppLocalizations.of(context)!.checkNetworkAndTryAgain,
+                      context.l10n.checkNetworkAndTryAgain,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -171,7 +171,7 @@ class CoinsPage extends StatelessWidget {
                       },
                       icon: const Icon(Icons.refresh),
                       label: Text(
-                        AppLocalizations.of(context)!.retry,
+                        context.l10n.retry,
                       ),
                     ),
                   ],
@@ -195,7 +195,7 @@ class CoinsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.searchCoin,
+                        hintText: context.l10n.searchCoin,
                         border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {

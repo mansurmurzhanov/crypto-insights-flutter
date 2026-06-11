@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/bloc/theme_mode/theme_mode_cubit.dart';
 import '../../../app/bloc/locale/locale_cubit.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../core/extensions/context_extensions.dart';
 import '../../../core/theme/app_spacing.dart';
 
 @RoutePage()
@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.settings,
+          context.l10n.settings,
         ),
       ),
       body: Padding(
@@ -28,7 +28,7 @@ class SettingsPage extends StatelessWidget {
                 context.read<ThemeModeCubit>().setLight();
               },
               child: Text(
-                AppLocalizations.of(context)!.light,
+                context.l10n.light,
               ),
             ),
             const SizedBox(height: AppSpacing.md2),
@@ -37,7 +37,7 @@ class SettingsPage extends StatelessWidget {
                 context.read<ThemeModeCubit>().setDark();
               },
               child: Text(
-                AppLocalizations.of(context)!.dark,
+                context.l10n.dark,
               ),
             ),
             const SizedBox(height: AppSpacing.md2),
@@ -46,7 +46,7 @@ class SettingsPage extends StatelessWidget {
                 context.read<ThemeModeCubit>().setSystem();
               },
               child: Text(
-                AppLocalizations.of(context)!.system,
+                context.l10n.system,
               ),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                 context.read<LocaleCubit>().setEnglish();
               },
               child: Text(
-                AppLocalizations.of(context)!.english,
+                context.l10n.english,
               ),
             ),
             const SizedBox(height: AppSpacing.md2),
@@ -66,7 +66,7 @@ class SettingsPage extends StatelessWidget {
                 context.read<LocaleCubit>().setRussian();
               },
               child: Text(
-                AppLocalizations.of(context)!.russian,
+                context.l10n.russian,
               ),
             ),
           ],
