@@ -1,17 +1,13 @@
+import '../../../core/error/failure.dart';
 import '../domain/entities/coin_entity.dart';
 
-enum CoinsStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
+enum CoinsStatus { initial, loading, success, failure }
 
 class CoinsState {
   final CoinsStatus status;
   final List<CoinEntity> coins;
   final String query;
-  final String? error;
+  final Failure? error;
   final String sortBy;
   final int visibleCount;
 
@@ -28,7 +24,7 @@ class CoinsState {
     CoinsStatus? status,
     List<CoinEntity>? coins,
     String? query,
-    String? error,
+    Failure? error,
     String? sortBy,
     int? visibleCount,
     bool clearError = false,

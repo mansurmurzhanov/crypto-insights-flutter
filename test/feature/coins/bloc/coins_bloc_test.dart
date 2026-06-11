@@ -8,8 +8,7 @@ import 'package:crypto_insights/feature/coins/bloc/coins_state.dart';
 import 'package:crypto_insights/feature/coins/domain/usecases/get_coins_use_case.dart';
 import 'package:crypto_insights/core/error/failure.dart';
 
-class MockGetCoinsUseCase extends Mock
-    implements GetCoinsUseCase {}
+class MockGetCoinsUseCase extends Mock implements GetCoinsUseCase {}
 
 void main() {
   late MockGetCoinsUseCase mockGetCoinsUseCase;
@@ -21,19 +20,11 @@ void main() {
   blocTest<CoinsBloc, CoinsState>(
     'emits loading then success when coins load successfully',
     build: () {
-      when(
-        () => mockGetCoinsUseCase(),
-      ).thenAnswer(
-        (_) async => [],
-      );
+      when(() => mockGetCoinsUseCase()).thenAnswer((_) async => []);
 
-      return CoinsBloc(
-        mockGetCoinsUseCase,
-      );
+      return CoinsBloc(mockGetCoinsUseCase);
     },
-    act: (bloc) => bloc.add(
-      LoadCoins(),
-    ),
+    act: (bloc) => bloc.add(LoadCoins()),
     expect: () => [
       isA<CoinsState>().having(
         (state) => state.status,
@@ -53,17 +44,11 @@ void main() {
     build: () {
       when(
         () => mockGetCoinsUseCase(),
-      ).thenThrow(
-        const NetworkFailure('no internet'),
-      );
+      ).thenThrow(const NetworkFailure('no internet'));
 
-      return CoinsBloc(
-        mockGetCoinsUseCase,
-      );
+      return CoinsBloc(mockGetCoinsUseCase);
     },
-    act: (bloc) => bloc.add(
-      LoadCoins(),
-    ),
+    act: (bloc) => bloc.add(LoadCoins()),
     expect: () => [
       isA<CoinsState>().having(
         (state) => state.status,
@@ -71,16 +56,8 @@ void main() {
         CoinsStatus.loading,
       ),
       isA<CoinsState>()
-          .having(
-            (state) => state.status,
-            'status',
-            CoinsStatus.failure,
-          )
-          .having(
-            (state) => state.error,
-            'error',
-            'noInternetConnection',
-          ),
+          .having((state) => state.status, 'status', CoinsStatus.failure)
+          .having((state) => state.error, 'error', isA<NetworkFailure>()),
     ],
   );
 }

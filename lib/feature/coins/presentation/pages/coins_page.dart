@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/router/app_router.dart';
+import '../../../../core/error/failure.dart';
 import '../../../../core/extensions/context_extensions.dart';
 
 import '../widgets/coin_tile.dart';
@@ -137,7 +138,7 @@ class CoinsPage extends StatelessWidget {
                     const Icon(Icons.wifi_off, size: 48),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      state.error == 'noInternetConnection'
+                      state.error is NetworkFailure
                           ? context.l10n.noInternetConnection
                           : context.l10n.somethingWentWrong,
                       textAlign: TextAlign.center,

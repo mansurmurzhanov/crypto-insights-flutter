@@ -3,6 +3,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/error/failure.dart';
 import '../bloc/coin_detail_bloc.dart';
 import '../bloc/coin_detail_event.dart';
 import '../bloc/coin_detail_state.dart';
@@ -89,7 +90,7 @@ class CoinDetailPage extends StatelessWidget {
                   const Icon(Icons.wifi_off, size: 48),
                   const SizedBox(height: AppSpacing.md),
                   Text(
-                    state.errorMessage == 'noInternetConnection'
+                    state.failure is NetworkFailure
                         ? context.l10n.noInternetConnection
                         : context.l10n.somethingWentWrong,
                     textAlign: TextAlign.center,

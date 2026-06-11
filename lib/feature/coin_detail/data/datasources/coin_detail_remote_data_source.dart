@@ -1,31 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/failure_mapper.dart';
 import '../../../../core/network/dio_client.dart';
 
 import '../models/coin_detail_model.dart';
 
 abstract class CoinDetailRemoteDataSource {
-  Future<CoinDetailModel> getCoinDetail(
-    String coinId,
-  );
+  Future<CoinDetailModel> getCoinDetail(String coinId);
 }
 
 @LazySingleton(as: CoinDetailRemoteDataSource)
-class CoinDetailRemoteDataSourceImpl
-    implements CoinDetailRemoteDataSource {
+class CoinDetailRemoteDataSourceImpl implements CoinDetailRemoteDataSource {
   final DioClient dioClient;
 
   final Map<String, CoinDetailModel> _cache = {};
   final Map<String, DateTime> _cacheTime = {};
 
-  CoinDetailRemoteDataSourceImpl(
-    this.dioClient,
-  );
+  CoinDetailRemoteDataSourceImpl(this.dioClient);
 
   @override
-  Future<CoinDetailModel> getCoinDetail(
-    String coinId,
-  ) async {
+  Future<CoinDetailModel> getCoinDetail(String coinId) async {
     if (_cache.containsKey(coinId) &&
         _cacheTime.containsKey(coinId) &&
         DateTime.now().difference(_cacheTime[coinId]!) <
@@ -33,17 +28,17 @@ class CoinDetailRemoteDataSourceImpl
       return _cache[coinId]!;
     }
 
-    final response = await dioClient.dio.get(
-      '/coins/$coinId',
-    );
+    try {
+      final response = await dioClient.dio.get('/coins/$coinId');
 
-    final coinDetail = CoinDetailModel.fromJson(
-      response.data,
-    );
+      final coinDetail = CoinDetailModel.fromJson(response.data);
 
-    _cache[coinId] = coinDetail;
-    _cacheTime[coinId] = DateTime.now();
+      _cache[coinId] = coinDetail;
+      _cacheTime[coinId] = DateTime.now();
 
-    return coinDetail;
+      return coinDetail;
+    } on DioException catch (e) {
+      throw mapDioException(e);
+    }
   }
 }
