@@ -13,7 +13,6 @@ import '../../bloc/coins_bloc.dart';
 import '../../bloc/coins_event.dart';
 import '../../bloc/coins_state.dart';
 
-@RoutePage()
 class CoinsPage extends StatelessWidget {
   const CoinsPage({super.key});
 
@@ -21,52 +20,38 @@ class CoinsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.l10n.cryptoInsights,
-        ),
+        title: Text(context.l10n.cryptoInsights),
         actions: [
           PopupMenuButton<String>(
             icon: const Icon(Icons.sort),
             onSelected: (value) {
-              context.read<CoinsBloc>().add(
-                SortCoins(value),
-              );
+              context.read<CoinsBloc>().add(SortCoins(value));
             },
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'marketCap',
-                child: Text(
-                  context.l10n.sortByMarketCap,
-                ),
+                child: Text(context.l10n.sortByMarketCap),
               ),
               PopupMenuItem(
                 value: 'change24hDesc',
-                child: Text(
-                  context.l10n.topGainers24h,
-                ),
+                child: Text(context.l10n.topGainers24h),
               ),
               PopupMenuItem(
                 value: 'change24hAsc',
-                child: Text(
-                  context.l10n.topLosers24h,
-                ),
+                child: Text(context.l10n.topLosers24h),
               ),
             ],
           ),
           IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {
-              context.router.push(
-                const FavoritesRoute(),
-              );
+              context.router.push(const FavoritesRoute());
             },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              context.router.push(
-                const SettingsRoute(),
-              );
+              context.router.push(const SettingsRoute());
             },
           ),
         ],
@@ -75,10 +60,7 @@ class CoinsPage extends StatelessWidget {
         builder: (context, state) {
           switch (state.status) {
             case CoinsStatus.initial:
-              context.read<CoinsBloc>().add(LoadCoins());
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
 
             case CoinsStatus.loading:
               return Column(
@@ -95,11 +77,15 @@ class CoinsPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                      ),
                       itemCount: 10,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.md2,),
+                          padding: const EdgeInsets.only(
+                            bottom: AppSpacing.md2,
+                          ),
                           child: Row(
                             children: [
                               Container(
@@ -148,10 +134,7 @@ class CoinsPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.wifi_off,
-                      size: 48,
-                    ),
+                    const Icon(Icons.wifi_off, size: 48),
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       state.error == 'noInternetConnection'
@@ -170,9 +153,7 @@ class CoinsPage extends StatelessWidget {
                         context.read<CoinsBloc>().add(LoadCoins());
                       },
                       icon: const Icon(Icons.refresh),
-                      label: Text(
-                        context.l10n.retry,
-                      ),
+                      label: Text(context.l10n.retry),
                     ),
                   ],
                 ),
@@ -186,8 +167,9 @@ class CoinsPage extends StatelessWidget {
                     coin.symbol.toLowerCase().contains(query);
               }).toList();
 
-              final visibleCoins =
-                  filteredCoins.take(state.visibleCount).toList();
+              final visibleCoins = filteredCoins
+                  .take(state.visibleCount)
+                  .toList();
 
               return Column(
                 children: [
@@ -199,34 +181,26 @@ class CoinsPage extends StatelessWidget {
                         border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
-                        context.read<CoinsBloc>().add(
-                          SearchCoins(value),
-                        );
+                        context.read<CoinsBloc>().add(SearchCoins(value));
                       },
                     ),
                   ),
                   Expanded(
                     child: RefreshIndicator(
                       onRefresh: () async {
-                        context.read<CoinsBloc>().add(
-                          RefreshCoins(),
-                        );
+                        context.read<CoinsBloc>().add(RefreshCoins());
                       },
                       child: ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemCount: visibleCoins.length,
                         itemBuilder: (context, index) {
                           if (index >= visibleCoins.length - 5) {
-                            context.read<CoinsBloc>().add(
-                              LoadMoreCoins(),
-                            );
+                            context.read<CoinsBloc>().add(LoadMoreCoins());
                           }
 
                           final coin = visibleCoins[index];
 
-                          return CoinTile(
-                            coin: coin,
-                          );
+                          return CoinTile(coin: coin);
                         },
                       ),
                     ),

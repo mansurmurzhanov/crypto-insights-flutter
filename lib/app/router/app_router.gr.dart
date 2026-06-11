@@ -11,7 +11,7 @@
 part of 'app_router.dart';
 
 /// generated route for
-/// [CoinDetailPage]
+/// [CoinDetailRoutePage]
 class CoinDetailRoute extends PageRouteInfo<CoinDetailRouteArgs> {
   CoinDetailRoute({
     Key? key,
@@ -29,7 +29,7 @@ class CoinDetailRoute extends PageRouteInfo<CoinDetailRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<CoinDetailRouteArgs>();
-      return CoinDetailPage(key: args.key, coinId: args.coinId);
+      return CoinDetailRoutePage(key: args.key, coinId: args.coinId);
     },
   );
 }
@@ -58,7 +58,7 @@ class CoinDetailRouteArgs {
 }
 
 /// generated route for
-/// [CoinsPage]
+/// [CoinsRoutePage]
 class CoinsRoute extends PageRouteInfo<void> {
   const CoinsRoute({List<PageRouteInfo>? children})
     : super(CoinsRoute.name, initialChildren: children);
@@ -68,13 +68,13 @@ class CoinsRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CoinsPage();
+      return const CoinsRoutePage();
     },
   );
 }
 
 /// generated route for
-/// [FavoritesPage]
+/// [FavoritesRoutePage]
 class FavoritesRoute extends PageRouteInfo<void> {
   const FavoritesRoute({List<PageRouteInfo>? children})
     : super(FavoritesRoute.name, initialChildren: children);
@@ -84,7 +84,7 @@ class FavoritesRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const FavoritesPage();
+      return const FavoritesRoutePage();
     },
   );
 }
