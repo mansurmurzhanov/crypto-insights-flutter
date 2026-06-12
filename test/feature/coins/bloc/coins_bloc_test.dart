@@ -60,4 +60,42 @@ void main() {
           .having((state) => state.error, 'error', isA<NetworkFailure>()),
     ],
   );
+  blocTest<CoinsBloc, CoinsState>(
+  'refresh coins reloads data',
+  build: () {
+    when(
+  () => mockGetCoinsUseCase(
+    forceRefresh: true,
+  ),
+).thenAnswer((_) async => []);
+    return CoinsBloc(mockGetCoinsUseCase);
+  },
+  act: (bloc) => bloc.add(RefreshCoins()),
+  expect: () => [
+    isA<CoinsState>().having(
+      (state) => state.status,
+      'status',
+      CoinsStatus.loading,
+    ),
+    isA<CoinsState>().having(
+      (state) => state.status,
+      'status',
+      CoinsStatus.success,
+    ),
+  ],
+);
+blocTest<CoinsBloc, CoinsState>(
+  'search coins updates query',
+  build: () => CoinsBloc(mockGetCoinsUseCase),
+  act: (bloc) => bloc.add(
+    SearchCoins('btc'),
+  ),
+  expect: () => [
+    isA<CoinsState>().having(
+      (state) => state.query,
+      'query',
+      'btc',
+    ),
+  ],
+);
 }

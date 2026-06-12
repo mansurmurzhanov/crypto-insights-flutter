@@ -29,8 +29,6 @@ import 'package:crypto_insights/feature/coin_detail/domain/usecases/get_coin_cha
     as _i32;
 import 'package:crypto_insights/feature/coin_detail/domain/usecases/get_coin_detail_use_case.dart'
     as _i34;
-import 'package:crypto_insights/feature/coin_detail/presentation/bloc/coin_chart_bloc.dart'
-    as _i607;
 import 'package:crypto_insights/feature/coin_detail/presentation/bloc/coin_detail_bloc.dart'
     as _i665;
 import 'package:crypto_insights/feature/coins/bloc/coins_bloc.dart' as _i119;
@@ -121,11 +119,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i119.CoinsBloc>(
       () => _i119.CoinsBloc(gh<_i391.GetCoinsUseCase>()),
     );
-    gh.factory<_i607.CoinChartBloc>(
-      () => _i607.CoinChartBloc(gh<_i32.GetCoinChartUseCase>()),
-    );
     gh.factory<_i665.CoinDetailBloc>(
-      () => _i665.CoinDetailBloc(gh<_i34.GetCoinDetailUseCase>()),
+      () => _i665.CoinDetailBloc(
+        gh<_i34.GetCoinDetailUseCase>(),
+        gh<_i32.GetCoinChartUseCase>(),
+      ),
     );
     return this;
   }

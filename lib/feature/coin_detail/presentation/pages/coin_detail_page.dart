@@ -8,9 +8,6 @@ import '../bloc/coin_detail_bloc.dart';
 import '../bloc/coin_detail_event.dart';
 import '../bloc/coin_detail_state.dart';
 
-import '../bloc/coin_chart_bloc.dart';
-import '../bloc/coin_chart_event.dart';
-import '../bloc/coin_chart_state.dart';
 import '../../../favorites/bloc/favorites_bloc.dart';
 import '../../../favorites/bloc/favorites_event.dart';
 import '../../../favorites/bloc/favorites_state.dart';
@@ -130,7 +127,7 @@ class CoinDetailPage extends StatelessWidget {
                   Text(coin.symbol.toUpperCase()),
                   const SizedBox(height: AppSpacing.md2),
 
-                  BlocBuilder<CoinChartBloc, CoinChartState>(
+                  BlocBuilder<CoinDetailBloc, CoinDetailState>(
                     builder: (context, chartState) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,9 +135,9 @@ class CoinDetailPage extends StatelessWidget {
                           for (final period in ChartPeriod.values) ...[
                             ChoiceChip(
                               label: Text(period.label),
-                              selected: chartState.selectedDays == period.days,
+                              selected: state.selectedDays == period.days,
                               onSelected: (_) {
-                                context.read<CoinChartBloc>().add(
+                                context.read<CoinDetailBloc>().add(
                                   ChangeChartPeriod(
                                     coinId: coinId,
                                     days: period.days,
@@ -158,15 +155,15 @@ class CoinDetailPage extends StatelessWidget {
                   const SizedBox(height: AppSpacing.md),
                   SizedBox(
                     height: 200,
-                    child: BlocBuilder<CoinChartBloc, CoinChartState>(
+                    child: BlocBuilder<CoinDetailBloc, CoinDetailState>(
                       builder: (context, chartState) {
-                        if (chartState.status == CoinChartStatus.loading) {
+                        if (state.chartStatus == CoinChartStatus.loading) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
 
-                        if (chartState.status == CoinChartStatus.failure) {
+                        if (state.chartStatus == CoinChartStatus.failure) {
                           return Center(
                             child: Text(context.l10n.failedToLoadChart),
                           );
@@ -176,7 +173,7 @@ class CoinDetailPage extends StatelessWidget {
                           primaryXAxis: DateTimeAxis(),
                           series: <CartesianSeries>[
                             LineSeries(
-                              dataSource: chartState.points,
+                              dataSource: state.points,
                               xValueMapper: (point, _) => point.time,
                               yValueMapper: (point, _) => point.price,
                             ),

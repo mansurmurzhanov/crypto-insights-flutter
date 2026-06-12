@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/coin_detail/domain/usecases/get_coin_detail_use_case.dart';
-import '../../feature/coin_detail/presentation/bloc/coin_chart_bloc.dart';
-import '../../feature/coin_detail/presentation/bloc/coin_chart_event.dart';
 import '../../feature/coin_detail/presentation/bloc/coin_detail_bloc.dart';
 import '../../feature/coin_detail/presentation/bloc/coin_detail_event.dart';
 import '../../feature/coin_detail/presentation/models/chart_period.dart';
@@ -66,16 +64,19 @@ class CoinDetailRoutePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => getIt<CoinDetailBloc>()..add(LoadCoinDetail(coinId)),
-        ),
-        BlocProvider(
-          create: (_) => getIt<CoinChartBloc>()
-            ..add(LoadCoinChart(coinId: coinId, days: ChartPeriod.day.days)),
-        ),
-        BlocProvider(
-          create: (_) => getIt<FavoritesBloc>()..add(LoadFavorites()),
-        ),
-      ],
+          create: (_) => getIt<CoinDetailBloc>()
+          ..add(LoadCoinDetail(coinId))
+          ..add(
+            LoadCoinChart(
+              coinId: coinId,
+              days: ChartPeriod.day.days,
+              ),
+            ),
+          ),
+          BlocProvider(
+            create: (_) => getIt<FavoritesBloc>()..add(LoadFavorites()),
+            ),
+          ],
       child: CoinDetailPage(coinId: coinId),
     );
   }
