@@ -84,4 +84,91 @@ void main() {
       ),
     ],
   );
+    test(
+    'initial state is correct',
+    () {
+      final bloc = FavoritesBloc(
+        getFavoritesUseCase,
+        addFavoriteUseCase,
+        removeFavoriteUseCase,
+      );
+
+      expect(
+        bloc.state.status,
+        FavoritesStatus.initial,
+      );
+
+      expect(
+        bloc.state.favorites,
+        isEmpty,
+      );
+
+      expect(
+        bloc.state.error,
+        isNull,
+      );
+    },
+  );
+
+  blocTest<FavoritesBloc, FavoritesState>(
+    'calls add favorite use case and reloads favorites',
+    build: () {
+      when(
+        () => addFavoriteUseCase('btc'),
+      ).thenAnswer((_) async {});
+
+      when(
+        () => getFavoritesUseCase(),
+      ).thenAnswer((_) async => ['btc']);
+
+      return FavoritesBloc(
+        getFavoritesUseCase,
+        addFavoriteUseCase,
+        removeFavoriteUseCase,
+      );
+    },
+    act: (bloc) => bloc.add(
+      AddFavorite('btc'),
+    ),
+    verify: (_) {
+      verify(
+        () => addFavoriteUseCase('btc'),
+      ).called(1);
+
+      verify(
+        () => getFavoritesUseCase(),
+      ).called(1);
+    },
+  );
+
+  blocTest<FavoritesBloc, FavoritesState>(
+    'calls remove favorite use case and reloads favorites',
+    build: () {
+      when(
+        () => removeFavoriteUseCase('btc'),
+      ).thenAnswer((_) async {});
+
+      when(
+        () => getFavoritesUseCase(),
+      ).thenAnswer((_) async => []);
+
+      return FavoritesBloc(
+        getFavoritesUseCase,
+        addFavoriteUseCase,
+        removeFavoriteUseCase,
+      );
+    },
+    act: (bloc) => bloc.add(
+      RemoveFavorite('btc'),
+    ),
+    verify: (_) {
+      verify(
+        () => removeFavoriteUseCase('btc'),
+      ).called(1);
+
+      verify(
+        () => getFavoritesUseCase(),
+      ).called(1);
+    },
+  );
 }
