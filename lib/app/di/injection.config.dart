@@ -12,6 +12,7 @@
 import 'package:crypto_insights/app/bloc/locale/locale_cubit.dart' as _i392;
 import 'package:crypto_insights/app/bloc/theme_mode/theme_mode_cubit.dart'
     as _i300;
+import 'package:crypto_insights/app/di/register_module.dart' as _i651;
 import 'package:crypto_insights/core/network/dio_client.dart' as _i181;
 import 'package:crypto_insights/feature/coin_detail/data/datasources/coin_chart_remote_data_source.dart'
     as _i603;
@@ -56,16 +57,20 @@ import 'package:crypto_insights/feature/favorites/domain/usecases/remove_favorit
     as _i703;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i392.LocaleCubit>(() => _i392.LocaleCubit());
-    gh.factory<_i300.ThemeModeCubit>(() => _i300.ThemeModeCubit());
+    final registerModule = _$RegisterModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => registerModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i181.DioClient>(() => _i181.DioClient());
     gh.lazySingleton<_i489.FavoritesRepository>(
       () => _i565.FavoritesRepositoryImpl(),
@@ -100,6 +105,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i703.RemoveFavoriteUseCase>(
       () => _i703.RemoveFavoriteUseCase(gh<_i489.FavoritesRepository>()),
     );
+    gh.factory<_i392.LocaleCubit>(
+      () => _i392.LocaleCubit(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i300.ThemeModeCubit>(
+      () => _i300.ThemeModeCubit(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i559.CoinsRepository>(
       () => _i670.CoinsRepositoryImpl(gh<_i285.CoinsRemoteDataSource>()),
     );
@@ -128,3 +139,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$RegisterModule extends _i651.RegisterModule {}
