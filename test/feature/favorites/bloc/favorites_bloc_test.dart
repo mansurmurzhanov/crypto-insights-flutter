@@ -171,4 +171,59 @@ void main() {
       ).called(1);
     },
   );
+  test(
+  'copyWith updates all fields',
+  () {
+    const state = FavoritesState();
+
+    final updated = state.copyWith(
+      status: FavoritesStatus.success,
+      favorites: ['btc'],
+      error: 'error',
+    );
+
+    expect(
+      updated.status,
+      FavoritesStatus.success,
+    );
+
+    expect(
+      updated.favorites,
+      ['btc'],
+    );
+
+    expect(
+      updated.error,
+      'error',
+    );
+  },
+);
+
+test(
+  'copyWith keeps old values when parameters are null',
+  () {
+    const state = FavoritesState(
+      status: FavoritesStatus.loading,
+      favorites: ['btc'],
+      error: 'error',
+    );
+
+    final updated = state.copyWith();
+
+    expect(
+      updated.status,
+      FavoritesStatus.loading,
+    );
+
+    expect(
+      updated.favorites,
+      ['btc'],
+    );
+
+    expect(
+      updated.error,
+      'error',
+    );
+  },
+);
 }
