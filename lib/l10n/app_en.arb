@@ -41,5 +41,6 @@
 
   "topLosers24h": "Top Losers (24h)",
   "theme": "Theme",
-"language": "Language"
+  "language": "Language",
+  "loading": "Loading..."
 }

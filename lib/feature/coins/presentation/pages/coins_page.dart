@@ -24,6 +24,7 @@ class CoinsPage extends StatelessWidget {
         title: Text(context.l10n.cryptoInsights),
         actions: [
           PopupMenuButton<String>(
+            key: const Key('sort_menu'),
             icon: const Icon(Icons.sort),
             onSelected: (value) {
               context.read<CoinsBloc>().add(SortCoins(value));
@@ -44,12 +45,14 @@ class CoinsPage extends StatelessWidget {
             ],
           ),
           IconButton(
+            key: const Key('favorites_button'),
             icon: const Icon(Icons.favorite),
             onPressed: () {
               context.router.push(const FavoritesRoute());
             },
           ),
           IconButton(
+            key: const Key('settings_button'),
             icon: const Icon(Icons.settings),
             onPressed: () {
               context.router.push(const SettingsRoute());
@@ -177,6 +180,7 @@ class CoinsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: TextField(
+                      key: const Key('search_field'),
                       decoration: InputDecoration(
                         hintText: context.l10n.searchCoin,
                         border: const OutlineInputBorder(),
@@ -188,6 +192,7 @@ class CoinsPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: RefreshIndicator(
+                      key: const Key('coins_refresh_indicator'),
                       onRefresh: () async {
                         context.read<CoinsBloc>().add(RefreshCoins());
                       },

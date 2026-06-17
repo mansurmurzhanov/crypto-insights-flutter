@@ -54,4 +54,152 @@ void main() {
       expect(find.text('Russian'), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'SettingsPage changes theme mode',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+
+      final prefs = await SharedPreferences.getInstance();
+
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeModeCubit>(
+              create: (_) => ThemeModeCubit(prefs),
+            ),
+            BlocProvider<LocaleCubit>(
+              create: (_) => LocaleCubit(prefs),
+            ),
+          ],
+          child: MaterialApp(
+            localizationsDelegates:
+                AppLocalizations.localizationsDelegates,
+            supportedLocales:
+                AppLocalizations.supportedLocales,
+            home: const SettingsPage(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Dark'));
+      await tester.pumpAndSettle();
+
+      expect(prefs.getString('theme_mode'), 'dark');
+    },
+  );
+
+  testWidgets(
+    'SettingsPage changes locale',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+
+      final prefs = await SharedPreferences.getInstance();
+
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeModeCubit>(
+              create: (_) => ThemeModeCubit(prefs),
+            ),
+            BlocProvider<LocaleCubit>(
+              create: (_) => LocaleCubit(prefs),
+            ),
+          ],
+          child: MaterialApp(
+            localizationsDelegates:
+                AppLocalizations.localizationsDelegates,
+            supportedLocales:
+                AppLocalizations.supportedLocales,
+            home: const SettingsPage(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Russian'));
+      await tester.pumpAndSettle();
+
+      expect(prefs.getString('locale'), 'ru');
+    },
+  );
+
+  testWidgets(
+    'SettingsPage changes theme mode to light',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'theme_mode': 'dark',
+      });
+
+      final prefs = await SharedPreferences.getInstance();
+
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeModeCubit>(
+              create: (_) => ThemeModeCubit(prefs),
+            ),
+            BlocProvider<LocaleCubit>(
+              create: (_) => LocaleCubit(prefs),
+            ),
+          ],
+          child: MaterialApp(
+            localizationsDelegates:
+                AppLocalizations.localizationsDelegates,
+            supportedLocales:
+                AppLocalizations.supportedLocales,
+            home: const SettingsPage(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Light'));
+      await tester.pumpAndSettle();
+
+      expect(prefs.getString('theme_mode'), 'light');
+    },
+  );
+
+  testWidgets(
+    'SettingsPage changes locale to english',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'locale': 'ru',
+      });
+
+      final prefs = await SharedPreferences.getInstance();
+
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeModeCubit>(
+              create: (_) => ThemeModeCubit(prefs),
+            ),
+            BlocProvider<LocaleCubit>(
+              create: (_) => LocaleCubit(prefs),
+            ),
+          ],
+          child: MaterialApp(
+            localizationsDelegates:
+                AppLocalizations.localizationsDelegates,
+            supportedLocales:
+                AppLocalizations.supportedLocales,
+            home: const SettingsPage(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('English'));
+      await tester.pumpAndSettle();
+
+      expect(prefs.getString('locale'), 'en');
+    },
+  );
 }

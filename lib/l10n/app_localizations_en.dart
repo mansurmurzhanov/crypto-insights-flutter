@@ -110,4 +110,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get loading => 'Loading...';
 }

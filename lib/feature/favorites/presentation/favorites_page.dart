@@ -55,7 +55,7 @@ class FavoritesPage extends StatelessWidget {
                 ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const ListTile(title: Text('Loading...'));
+                    return ListTile(title: Text(context.l10n.loading));
                   }
 
                   final coin = snapshot.data!;

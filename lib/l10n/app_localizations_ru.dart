@@ -110,4 +110,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get language => 'Язык';
+
+  @override
+  String get loading => 'Загрузка...';
 }
