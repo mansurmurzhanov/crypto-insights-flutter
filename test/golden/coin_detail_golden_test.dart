@@ -48,12 +48,7 @@ void main() {
     atl: 1,
   );
 
-  final points = [
-    CoinChartPointEntity(
-      time: DateTime(2024),
-      price: 100000,
-    ),
-  ];
+  final List<CoinChartPointEntity> points = [];
 
   setUp(() {
     coinDetailBloc = MockCoinDetailBloc();
