@@ -2,6 +2,8 @@
 
 # Crypto Insights
 
+![Coverage](https://img.shields.io/badge/coverage-80.8%25-brightgreen)
+
 A Flutter application for tracking cryptocurrency prices using the CoinGecko API.
 
 ## Features
@@ -173,8 +175,54 @@ flutter run
 
 ## Testing
 
+### Run all checks
+
+```bash
+./scripts/test.sh
+```
+
+This script runs:
+
+- flutter analyze
+- unit and widget tests
+- integration tests
+- coverage generation
+
+### Run all unit and widget tests
+
 ```bash
 flutter test
+```
+
+### Run golden tests
+
+```bash
+flutter test test/golden
+```
+
+### Update golden files
+
+```bash
+flutter test --update-goldens test/golden
+```
+
+### Run integration test
+
+```bash
+flutter test integration_test/app_flow_test.dart -d macos
+```
+
+### Generate coverage report
+
+```bash
+flutter test --coverage
+lcov --summary coverage/lcov.info
+```
+
+Current project coverage:
+
+```text
+80.8%
 ```
 
 ## Screenshots

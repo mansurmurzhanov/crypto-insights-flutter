@@ -61,6 +61,7 @@ class FavoritesPage extends StatelessWidget {
                   final coin = snapshot.data!;
 
                   return ListTile(
+                    key: Key('favorite_coin_$coinId'),
                     onTap: () {
                       context.router.push(CoinDetailRoute(coinId: coinId));
                     },

@@ -15,6 +15,7 @@ class CoinTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: Key('coin_tile_${coin.id}'),
       onTap: () {
         context.router.push(CoinDetailRoute(coinId: coin.id));
       },

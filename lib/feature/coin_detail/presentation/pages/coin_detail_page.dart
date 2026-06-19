@@ -33,6 +33,7 @@ class CoinDetailPage extends StatelessWidget {
               final isFavorite = favoritesState.favorites.contains(coinId);
 
               return IconButton(
+                key: const Key('favorite_button'),
                 icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
                 onPressed: () {
                   if (isFavorite) {
@@ -134,6 +135,7 @@ class CoinDetailPage extends StatelessWidget {
                         children: [
                           for (final period in ChartPeriod.values) ...[
                             ChoiceChip(
+                              key: Key('period_${period.days}'),
                               label: Text(period.label),
                               selected: state.selectedDays == period.days,
                               onSelected: (_) {
